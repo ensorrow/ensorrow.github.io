@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>微信小程序初探 | 吕哲扬的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="文章目录：
+
+开发环境搭建
+应用架构解析
+逻辑层
+注册程序
+注册页面
+模块化
+API
+
+
+视图层
+数据绑定
+条件渲染和列表渲染
+模板
+事件
+引用
+WXSS
+组件
+
+
+
+-微信小程序公测啦！！！-哦。
+唉我这么激动周围的人毫无反应，真的是无趣啊。不管了，今天下午终于没课了，就放着要期末的积分变换不管来学这个吧。
+本质上来说，我们还是构造了一个webapp，但是微信弃用了安卓卡卡的原生webview，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序初探">
+<meta property="og:url" content="http://ensorrow.github.io/2016/11/07/微信小程序初探/index.html">
+<meta property="og:site_name" content="吕哲扬的个人博客">
+<meta property="og:description" content="文章目录：
+
+开发环境搭建
+应用架构解析
+逻辑层
+注册程序
+注册页面
+模块化
+API
+
+
+视图层
+数据绑定
+条件渲染和列表渲染
+模板
+事件
+引用
+WXSS
+组件
+
+
+
+-微信小程序公测啦！！！-哦。
+唉我这么激动周围的人毫无反应，真的是无趣啊。不管了，今天下午终于没课了，就放着要期末的积分变换不管来学这个吧。
+本质上来说，我们还是构造了一个webapp，但是微信弃用了安卓卡卡的原生webview，">
+<meta property="og:updated_time" content="2016-11-21T06:14:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微信小程序初探">
+<meta name="twitter:description" content="文章目录：
+
+开发环境搭建
+应用架构解析
+逻辑层
+注册程序
+注册页面
+模块化
+API
+
+
+视图层
+数据绑定
+条件渲染和列表渲染
+模板
+事件
+引用
+WXSS
+组件
+
+
+
+-微信小程序公测啦！！！-哦。
+唉我这么激动周围的人毫无反应，真的是无趣啊。不管了，今天下午终于没课了，就放着要期末的积分变换不管来学这个吧。
+本质上来说，我们还是构造了一个webapp，但是微信弃用了安卓卡卡的原生webview，">
+    
+
+    
+
+    
+        <link rel="icon" href="/" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?94ead7d7a5262d5a07746f42b4847057# enter Baidu Analytics hash key";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">吕哲扬的个人博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/category">目录</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/category">目录</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/avatar.jpg" />
+            <h2 id="name">ZheyangLv</h2>
+            <h3 id="title">前端开发，学生</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>陕西西安</span>
+            <a id="follow" target="_blank" href="https://github.com/ensorrow/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                23
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/ensorrow" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-微信小程序初探" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            微信小程序初探
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/07/微信小程序初探/">
+            <time datetime="2016-11-07T07:48:16.000Z" itemprop="datePublished">2016-11-07</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/wechat/">wechat</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>文章目录：</p>
+<ul>
+<li><a href="#env">开发环境搭建</a></li>
+<li><a href="#structure">应用架构解析</a></li>
+<li><a href="#logic">逻辑层</a><ul>
+<li><a href="#app">注册程序</a></li>
+<li><a href="#page">注册页面</a></li>
+<li><a href="#module">模块化</a></li>
+<li><a href="#api">API</a></li>
+</ul>
+</li>
+<li><a href="#view">视图层</a><ul>
+<li><a href="#data">数据绑定</a></li>
+<li><a href="#render">条件渲染和列表渲染</a></li>
+<li><a href="#tpl">模板</a></li>
+<li><a href="#event">事件</a></li>
+<li><a href="#ref">引用</a></li>
+<li><a href="#wxss">WXSS</a></li>
+<li><a href="#com">组件</a></li>
+</ul>
+</li>
+</ul>
+<p>-微信小程序公测啦！！！<br>-哦。</p>
+<p>唉我这么激动周围的人毫无反应，真的是无趣啊。不管了，今天下午终于没课了，就放着要期末的积分变换不管来学这个吧。</p>
+<p>本质上来说，我们还是构造了一个webapp，但是微信弃用了安卓卡卡的原生webview，用x5的内核来解析应用的Js（支持ES6哦😯），也不知道性能会如何。大概分为下面这么几块来研究一下这个框架：</p>
+<ul>
+<li>开发环境搭建</li>
+<li>应用架构</li>
+<li>逻辑层</li>
+<li>视图层</li>
+</ul>
+<h2 id="一、开发环境搭建"><a href="#一、开发环境搭建" class="headerlink" title="一、开发环境搭建"></a><a name="env">一、开发环境搭建</a></h2><p>开发环境搭建特别简单，直接下载开发IDE就行了，直接贴地址。。<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/devtools/download.html?t=20161107" target="_blank" rel="external">开发IDE下载</a>。</p>
+<h2 id="二、应用架构解析"><a href="#二、应用架构解析" class="headerlink" title="二、应用架构解析"></a><a name="structure">二、应用架构解析</a></h2><p>我们从官方给出的Hello World开始讲起吧，首先让我们看看目录结构：</p>
+<ul>
+<li>pages<ul>
+<li>index<ul>
+<li>index.js</li>
+<li>index.wxml</li>
+<li>index.wxss</li>
+</ul>
+</li>
+<li>logs<ul>
+<li>logs.js</li>
+<li>logs.json</li>
+<li>logs.wxml</li>
+<li>logs.wxss</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>utils<ul>
+<li>util.js</li>
+</ul>
+</li>
+<li>app.js</li>
+<li>app.json</li>
+<li>app.wxss</li>
+</ul>
+<p>首先可以看到有好几种没见过的后缀，类比过去的话<code>wxml</code>就是<code>html</code>，<code>wxss</code>就是<code>css</code>，按照那样理解就行了（当然是精简修改破解版的）。然后还有一些json，这些是作为配置文件使用的，一会单独讲。项目整体的架构相当清晰简洁（毕竟是helloworld。。），一个应用入口文件<code>app.js</code>，然后多个页面<code>index</code>, <code>logs</code>，一个公用的工具函数存放处<code>utils</code>。</p>
+<a id="more"></a>
+<p>我们从单个页面讲起。比如说Index页面，小程序要求页面文件名和目录名（页面名称）必须一致，所以也不需要在js里做import（这样挺方便的）。看看js文件和模板文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//index.js</span></div><div class="line"><span class="comment">//获取应用实例</span></div><div class="line"><span class="keyword">var</span> app = getApp()</div><div class="line">Page(&#123;</div><div class="line">  <span class="attr">data</span>: &#123;</div><div class="line">    <span class="attr">motto</span>: <span class="string">'Hello World'</span>,</div><div class="line">    <span class="attr">userInfo</span>: &#123;&#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">//事件处理函数</span></div><div class="line">  bindViewTap: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    wx.navigateTo(&#123;</div><div class="line">      <span class="attr">url</span>: <span class="string">'../logs/logs'</span></div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">onLoad</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'onLoad'</span>)</div><div class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span></div><div class="line">    <span class="comment">//调用应用实例的方法获取全局数据</span></div><div class="line">    app.getUserInfo(<span class="function"><span class="keyword">function</span>(<span class="params">userInfo</span>)</span>&#123;</div><div class="line">      <span class="comment">//更新数据</span></div><div class="line">      that.setData(&#123;</div><div class="line">        <span class="attr">userInfo</span>:userInfo</div><div class="line">      &#125;)</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--index.wxml--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">view</span>  <span class="attr">bindtap</span>=<span class="string">"bindViewTap"</span> <span class="attr">class</span>=<span class="string">"userinfo"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">image</span> <span class="attr">class</span>=<span class="string">"userinfo-avatar"</span> <span class="attr">src</span>=<span class="string">"&#123;&#123;userInfo.avatarUrl&#125;&#125;"</span> <span class="attr">background-size</span>=<span class="string">"cover"</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"userinfo-nickname"</span>&gt;</span>&#123;&#123;userInfo.nickName&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"usermotto"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">"user-motto"</span>&gt;</span>&#123;&#123;motto&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>其中Page是框架提供的全局方法，然后和一般的MVVM框架一样，采用了数据绑定，然后也有事件绑定、生命周期这些东西（而且生命周期和应用需求很一致，比如说应用后台，这点很赞），可以看到也有路由跳转（index貌似是默认打开的），视图更新。</p>
+<p>下面看看json文件是干什么的，比如说logs.json</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"navigationBarTitleText"</span>: <span class="string">"查看启动日志"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因为程序是运行在微信之上的，所以我们给的这些配置就是改一下标题栏颜色啊文字啊这些东西。然后还有一个复杂一些的app.json，这个就看文档配置就好了，要注册page之类的。架构大概就这个样子。</p>
+<h2 id="三、逻辑层"><a href="#三、逻辑层" class="headerlink" title="三、逻辑层"></a><a name="logic">三、逻辑层</a></h2><p>微信小程序的逻辑层内容相当的简洁，官方文档的TAB就这几个东西</p>
+<ul>
+<li>注册程序</li>
+<li>注册页面</li>
+<li>模块化</li>
+<li>API</li>
+</ul>
+<p>从应用本身来说呢，我们处理逻辑大概就这几种情境吧：</p>
+<ul>
+<li>页面内部的逻辑处理</li>
+<li>路由跳转</li>
+<li>跨页面的通信</li>
+</ul>
+<h4 id="1-注册程序"><a href="#1-注册程序" class="headerlink" title="1. 注册程序"></a><a name="app">1. 注册程序</a></h4><p>框架给我们提供了什么呢？首先是 <strong>注册程序</strong>，也就是全局的App方法（传入一个对象），这个作为应用的主入口，可以监听一些应用生命周期的事件，然后配置一些全局变量，按理说应该还要能配置路由关系。看看我们的App.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//app.js</span></div><div class="line">App(&#123;</div><div class="line">  <span class="attr">onLaunch</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">//调用API从本地缓存中获取数据</span></div><div class="line">    <span class="keyword">var</span> logs = wx.getStorageSync(<span class="string">'logs'</span>) || []</div><div class="line">    logs.unshift(<span class="built_in">Date</span>.now())</div><div class="line">    wx.setStorageSync(<span class="string">'logs'</span>, logs)</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">getUserInfo</span>:<span class="function"><span class="keyword">function</span>(<span class="params">cb</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.globalData.userInfo)&#123;</div><div class="line">      <span class="keyword">typeof</span> cb == <span class="string">"function"</span> &amp;&amp; cb(<span class="keyword">this</span>.globalData.userInfo)</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">      <span class="comment">//调用登录接口</span></div><div class="line">      wx.login(&#123;</div><div class="line">        <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">          wx.getUserInfo(&#123;</div><div class="line">            <span class="attr">success</span>: <span class="function"><span class="keyword">function</span> (<span class="params">res</span>) </span>&#123;</div><div class="line">              that.globalData.userInfo = res.userInfo</div><div class="line">              <span class="keyword">typeof</span> cb == <span class="string">"function"</span> &amp;&amp; cb(that.globalData.userInfo)</div><div class="line">            &#125;</div><div class="line">          &#125;)</div><div class="line">        &#125;</div><div class="line">      &#125;)</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">globalData</span>:&#123;</div><div class="line">    <span class="attr">userInfo</span>:<span class="literal">null</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>这里的onLaunch是一个生命周期的事件钩子，然后getUserInfo相当于一个全局的方法（使用getApp()获取实例以后就可以调用，在index.js里就有），globalData作为app的属性自然就担任了全局变量这一角色啦。这里还用到了本地存储这一API，这也是一个体验好的应用必不可少的部分。</p>
+<h4 id="2-注册页面"><a href="#2-注册页面" class="headerlink" title="2. 注册页面"></a><a name="page">2. 注册页面</a></h4><p>然后是 <strong>注册页面</strong>。和全局的App方法对应也有一个Page方法用于页面的注册，页面也会有一些生命周期的事件，除此之外还有一个比较特殊的事件：页面下拉刷新 <code>onPullDownRefresh</code>。其他的就是自定义事件处理函数的注册了，见DEMO</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">bindtap</span>=<span class="string">"viewTap"</span>&gt;</span> click me <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Page(&#123;</div><div class="line">  <span class="attr">viewTap</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'view tap'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>除了bind+event作为属性名还可以用catch+event，区别在于后者可以阻止继续冒泡。然后事件绑定函数只有一个参数event，但是event包含了该节点的信息所以很方便就能完成各种逻辑定制。</p>
+<h4 id="3-模块化"><a href="#3-模块化" class="headerlink" title="3. 模块化"></a><a name="module">3. 模块化</a></h4><p>首先要明确的是，目前版本的小程序还不支持node_modules的导入，所以要用的话只能复制源码过去了。和webpack的模块化类似，小程序各个page的作用域是独立的，如果要对外暴露接口的话（比如写公共组件），要使用模块导出</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// common.js</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayHello</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`Hello <span class="subst">$&#123;name&#125;</span> !`</span>)</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayGoodbye</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`Goodbye <span class="subst">$&#123;name&#125;</span> !`</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports.sayHello = sayHello</div><div class="line"><span class="comment">// module.exports = &#123; sayHello: sayHello &#125;</span></div></pre></td></tr></table></figure>
+<p>结合的ES6的import食用口感更佳。</p>
+<h4 id="4-API"><a href="#4-API" class="headerlink" title="4. API"></a><a name="api">4. API</a></h4><p>小程序的API都通过wx这一个全局对象来访问，和运行在浏览器的javascript类似，wx也提供了如HTTP请求，本地存储，绘图这一类的API，除此之外还有一些更为本地化的API，比如拨打电话、重力感应、交互反馈、支付这一类API，非常的方便，具体使用时请查阅<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/api/?t=20161107" target="_blank" rel="external">小程序API</a></p>
+<h2 id="四、视图层"><a href="#四、视图层" class="headerlink" title="四、视图层"></a><a name="view">四、视图层</a></h2><p>与React Native类似，微信小程序也自制了一套标签（不过要精简的多），称为WXML(WeiXin Markup language)，也同样是基于组件的。与之配合的样式表称为WXSS(WeiXin Style Sheet)。</p>
+<p>WXML作为模板语言，少不了数据绑定、条件渲染、列表渲染这些东西，和Vue.js很像，下面简单过一遍。</p>
+<h4 id="1-数据绑定"><a href="#1-数据绑定" class="headerlink" title="1. 数据绑定"></a><a name="data">1. 数据绑定</a></h4><p>数据绑定采用Mustache语法，也就是双大括号。值的注意的是大括号里支持一些ES6的表达式，比如说展开语法和简化的对象属性写法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">is</span>=<span class="string">"objectCombine"</span> <span class="attr">data</span>=<span class="string">"&#123;&#123;...obj1, ...obj2, e&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Page(&#123;</div><div class="line">  <span class="attr">data</span>: &#123;</div><div class="line">    <span class="attr">obj1</span>: &#123;</div><div class="line">      <span class="attr">a</span>: <span class="number">1</span>,</div><div class="line">      <span class="attr">b</span>: <span class="number">2</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">obj2</span>: &#123;</div><div class="line">      <span class="attr">c</span>: <span class="number">3</span>,</div><div class="line">      <span class="attr">d</span>: <span class="number">4</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">e</span>: <span class="number">5</span></div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>得到的结果就是<code>{a: 1, b: 2, c: 3, d: 4, e: 5}</code>。</p>
+<h4 id="2-条件渲染和列表渲染"><a href="#2-条件渲染和列表渲染" class="headerlink" title="2. 条件渲染和列表渲染"></a><a name="render">2. 条件渲染和列表渲染</a></h4><p>条件渲染和列表渲染很简单，就像vue.js里两个指令<code>v-if</code>和<code>v-for</code>，小程序里用的是<code>wx:if</code>和<code>wx:for</code>，用两个简单的DEMO过一下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 条件渲染 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:if</span>=<span class="string">"&#123;&#123;length &gt; 5&#125;&#125;"</span>&gt;</span> 1 <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:elif</span>=<span class="string">"&#123;&#123;length &gt; 2&#125;&#125;"</span>&gt;</span> 2 <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:else</span>&gt;</span> 3 <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 列表渲染 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:for</span>=<span class="string">"&#123;&#123;array&#125;&#125;"</span>&gt;</span></div><div class="line">  &#123;&#123;index&#125;&#125;: &#123;&#123;item.message&#125;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>注意一下列表渲染里面的关键字index和item，对应的是数组的下标和元素，如果想自定义关键字的话就这样</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:for</span>=<span class="string">"&#123;&#123;array&#125;&#125;"</span> <span class="attr">wx:for-index</span>=<span class="string">"idx"</span> <span class="attr">wx:for-item</span>=<span class="string">"itemName"</span>&gt;</span></div><div class="line">  &#123;&#123;idx&#125;&#125;: &#123;&#123;itemName.message&#125;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>还要提到一个block标签，在学RN的时候就觉得为了将几个部分组合起来要套一个View在外面很坑，这里就诞生了一个block标签实现这个需求</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">block</span> <span class="attr">wx:if</span>=<span class="string">"&#123;&#123;true&#125;&#125;"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">view</span>&gt;</span> view1 <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">view</span>&gt;</span> view2 <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">block</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>提到列表渲染就要提到 <strong>key</strong> 这个东西，因为框架不知道列表元素变了以后是怎么变的，所以对于动态列表需要给列表元素一个独一无二的key，使用<code>wx:key</code>指令提供。指令值可以是一个字符串表示属性名（循环中的item的Property），也可以是关键字<code>*this</code>（如果item不是一个对象的话）。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">switch</span> <span class="attr">wx:for</span>=<span class="string">"&#123;&#123;objectArray&#125;&#125;"</span> <span class="attr">wx:key</span>=<span class="string">"unique"</span> <span class="attr">style</span>=<span class="string">"display: block;"</span>&gt;</span> &#123;&#123;item.id&#125;&#125; <span class="tag">&lt;/<span class="name">switch</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">bindtap</span>=<span class="string">"switch"</span>&gt;</span> Switch <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">bindtap</span>=<span class="string">"addToFront"</span>&gt;</span> Add to the front <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">switch</span> <span class="attr">wx:for</span>=<span class="string">"&#123;&#123;numberArray&#125;&#125;"</span> <span class="attr">wx:key</span>=<span class="string">"*this"</span> <span class="attr">style</span>=<span class="string">"display: block;"</span>&gt;</span> &#123;&#123;item&#125;&#125; <span class="tag">&lt;/<span class="name">switch</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">bindtap</span>=<span class="string">"addNumberToFront"</span>&gt;</span> Add to the front <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">Page(&#123;</div><div class="line">  <span class="attr">data</span>: &#123;</div><div class="line">    <span class="attr">objectArray</span>: [</div><div class="line">      &#123;<span class="attr">id</span>: <span class="number">5</span>, <span class="attr">unique</span>: <span class="string">'unique_5'</span>&#125;,</div><div class="line">      &#123;<span class="attr">id</span>: <span class="number">4</span>, <span class="attr">unique</span>: <span class="string">'unique_4'</span>&#125;,</div><div class="line">      &#123;<span class="attr">id</span>: <span class="number">3</span>, <span class="attr">unique</span>: <span class="string">'unique_3'</span>&#125;,</div><div class="line">      &#123;<span class="attr">id</span>: <span class="number">2</span>, <span class="attr">unique</span>: <span class="string">'unique_2'</span>&#125;,</div><div class="line">      &#123;<span class="attr">id</span>: <span class="number">1</span>, <span class="attr">unique</span>: <span class="string">'unique_1'</span>&#125;,</div><div class="line">      &#123;<span class="attr">id</span>: <span class="number">0</span>, <span class="attr">unique</span>: <span class="string">'unique_0'</span>&#125;,</div><div class="line">    ],</div><div class="line">    <span class="attr">numberArray</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">switch</span>: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> length = <span class="keyword">this</span>.data.objectArray.length</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length; ++i) &#123;</div><div class="line">      <span class="keyword">const</span> x = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * length)</div><div class="line">      <span class="keyword">const</span> y = <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * length)</div><div class="line">      <span class="keyword">const</span> temp = <span class="keyword">this</span>.data.objectArray[x]</div><div class="line">      <span class="keyword">this</span>.data.objectArray[x] = <span class="keyword">this</span>.data.objectArray[y]</div><div class="line">      <span class="keyword">this</span>.data.objectArray[y] = temp</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">this</span>.setData(&#123;</div><div class="line">      <span class="attr">objectArray</span>: <span class="keyword">this</span>.data.objectArray</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">addToFront</span>: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> length = <span class="keyword">this</span>.data.objectArray.length</div><div class="line">    <span class="keyword">this</span>.data.objectArray = [&#123;<span class="attr">id</span>: length, <span class="attr">unique</span>: <span class="string">'unique_'</span> + length&#125;].concat(<span class="keyword">this</span>.data.objectArray)</div><div class="line">    <span class="keyword">this</span>.setData(&#123;</div><div class="line">      <span class="attr">objectArray</span>: <span class="keyword">this</span>.data.objectArray</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">addNumberToFront</span>: <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    <span class="keyword">this</span>.data.numberArray = [ <span class="keyword">this</span>.data.numberArray.length + <span class="number">1</span> ].concat(<span class="keyword">this</span>.data.numberArray)</div><div class="line">    <span class="keyword">this</span>.setData(&#123;</div><div class="line">      <span class="attr">numberArray</span>: <span class="keyword">this</span>.data.numberArray</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h4 id="3-模板"><a href="#3-模板" class="headerlink" title="3. 模板"></a><a name="tpl">3. 模板</a></h4><p>还是和RN一样，因为View这些标签语义化的限制及组件化的要求，我们很多时候我们会自己定义一个模板来复用，这个直接看DEMO就懂了</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">name</span>=<span class="string">"msgItem"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">view</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span> &#123;&#123;index&#125;&#125;: &#123;&#123;msg&#125;&#125; <span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span> Time: &#123;&#123;time&#125;&#125; <span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">is</span>=<span class="string">"msgItem"</span> <span class="attr">data</span>=<span class="string">"&#123;&#123;...item&#125;&#125;"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>注意模板作用域是独立的，只能使用data属性传入的数据。</p>
+<h4 id="4-事件"><a href="#4-事件" class="headerlink" title="4. 事件"></a><a name="event">4. 事件</a></h4><p>前面简单提了一下事件的两种绑定方式，现在简单列一下wx支持的一些冒泡事件名称：</p>
+<ul>
+<li>touchstart  手指触摸动作开始</li>
+<li>touchmove   手指触摸后移动</li>
+<li>touchcancel 手指触摸动作被打断，如来电提醒，弹窗</li>
+<li>touchend    手指触摸动作结束</li>
+<li>tap 手指触摸后马上离开</li>
+<li>longtap 手指触摸后，超过350ms再离开</li>
+</ul>
+<p>其余的事件都是不冒泡的，那些就因组件而异了，比如说<code>&lt;form /&gt;</code>的submit等。然后之前也提过，事件参数就只有一个event，所以要传值的时候data-属性就显得很重要了，因为事件对象可以获取到一个<code>dataset</code>对象，对应都是就是各个自定义的data-属性。</p>
+<h4 id="5-视图的引用"><a href="#5-视图的引用" class="headerlink" title="5. 视图的引用"></a><a name="ref">5. 视图的引用</a></h4><p>就像ejs里会有include一样，模板语言肯定是会有引用嵌套的功能的，wx里提供了两种方法，分别是<code>import</code>和<code>include</code>，见DMEO</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- item.wxml --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">name</span>=<span class="string">"item"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">text</span>&gt;</span>&#123;&#123;text&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">import</span> <span class="attr">src</span>=<span class="string">"item.wxml"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">is</span>=<span class="string">"item"</span> <span class="attr">data</span>=<span class="string">"&#123;&#123;text: 'forbar'&#125;&#125;"</span>/&gt;</span></div></pre></td></tr></table></figure>
+<p>然后是include</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- index.wxml --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">src</span>=<span class="string">"header.wxml"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span> body <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- header.wxml --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span> header <span class="tag">&lt;/<span class="name">view</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="6-WXSS"><a href="#6-WXSS" class="headerlink" title="6. WXSS"></a><a name="wxss">6. WXSS</a></h4><p>WXSS继承了css的大部分特性，同时针对移动端做了一些拓展优化：</p>
+<ul>
+<li>尺寸单位</li>
+<li>样式导入</li>
+</ul>
+<p>尺寸单位是最赞的特性了，WXSS新增了<code>rpx</code>这个单位及重制了<code>rem</code>这个单位。其中使用rpx时，默认按照屏幕宽度750px进行样式编写即可，页面会根据实际页面大小进行缩放。而<code>rem</code>则默认屏幕为20rem宽，同样会自动缩放。</p>
+<p>样式导入和css中的写法一样（原理肯定不一样），使用<code>@import ()</code>来进行导入即可。</p>
+<p>初次之外，内联样式支持动态更新（数据绑定），选择器目前的支持范围如下：</p>
+<blockquote>
+<p>class   .intro  选择所有拥有 class=”intro” 的组件</p>
+<p>#id #firstname  选择拥有 id=”firstname” 的组件<br>element view    选择所有 view 组件<br>element, element    view checkbox   选择所有文档的 view 组件和所有的 checkbox 组件<br>::after view::after 在 view 组件后边插入内容<br>::before    view::before    在 view 组件前边插入内容</p>
+</blockquote>
+<p>值得注意的是，在wx中，选择器的优先级概念有差异，不同的page下面的wxss是独立的，只作用于相应页面不会相互覆盖，只有app下面的wxss才是通用的。</p>
+<h4 id="7-组件"><a href="#7-组件" class="headerlink" title="7. 组件"></a><a name="com">7. 组件</a></h4><p>首先还是要吐槽一下，真的和RN很像。。。wx提供了一系列组件，具体的还是查询官方文档吧~贴地址<a href="https://mp.weixin.qq.com/debug/wxadoc/dev/component/?t=20161107" target="_blank" rel="external">微信小程序组件</a></p>
+<p>嗯，真的就这么多，感觉这个框架设计的挺好用的。。。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://ensorrow.github.io/2016/11/07/微信小程序初探/" data-id="civrri8hf000srp8w5nkdokb8" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://ensorrow.github.io/2016/11/07/微信小程序初探/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://ensorrow.github.io/2016/11/07/微信小程序初探/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2016/11/05/Angular学习笔记（一）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Angular学习笔记（一）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/11/07/微信小程序初探/" data-title="微信小程序初探" data-url="http://ensorrow.github.io/2016/11/07/微信小程序初探/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/07/微信小程序初探/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/07/微信小程序初探/" class="title">微信小程序初探</a></p>
+                            <p class="item-date"><time datetime="2016-11-07T07:48:16.000Z" itemprop="datePublished">2016-11-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/05/Angular学习笔记（一）/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/05/Angular学习笔记（一）/" class="title">Angular学习笔记（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-05T08:45:07.000Z" itemprop="datePublished">2016-11-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/19/前端入门-HTML-CSS基础/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/09/19/前端入门-HTML-CSS基础/" class="title">前端入门-HTML+CSS基础</a></p>
+                            <p class="item-date"><time datetime="2016-09-19T05:08:07.000Z" itemprop="datePublished">2016-09-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/06/ES6学习笔记/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/06/ES6学习笔记/" class="title">ES6学习笔记</a></p>
+                            <p class="item-date"><time datetime="2016-08-06T07:47:20.000Z" itemprop="datePublished">2016-08-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/05/正则表达式从入门到放弃/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/05/正则表达式从入门到放弃/" class="title">正则表达式从入门到放弃</a></p>
+                            <p class="item-date"><time datetime="2016-08-05T10:48:23.000Z" itemprop="datePublished">2016-08-05</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ajax/">Ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EUX/">EUX</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETEASE/">NETEASE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-X/">OS-X</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Native/">React Native</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/">Redux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eeyes/">eeyes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jQuery/">jQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/">jquery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wechat/">wechat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端性能/">前端性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑苹果/">黑苹果</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/EUX/" style="font-size: 20px;">EUX</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/NETEASE/" style="font-size: 15px;">NETEASE</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/OS-X/" style="font-size: 10px;">OS-X</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/Redux/" style="font-size: 15px;">Redux</a> <a href="/tags/Regular/" style="font-size: 15px;">Regular</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/eeyes/" style="font-size: 10px;">eeyes</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/前端性能/" style="font-size: 10px;">前端性能</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/黑苹果/" style="font-size: 10px;">黑苹果</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.eeyes.net">e瞳网</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 吕哲扬<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'ensorrow'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

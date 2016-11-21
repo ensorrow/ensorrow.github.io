@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>前端性能优化：图片篇 | 吕哲扬的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前端图片优化的问题一直以来都是热门话题，从需求上来看，很多的站点往往是图片体积大于代码体积，图片请求多于代码文件请求，给前端的性能带来了很大的困扰。那么解决方案呢？🌚
+一.雪碧图+图片压缩什么是雪碧图呢，雪碧图即css sprites，是一种把一堆小图片拼成一张大图的简单粗暴的技术，拼完以后前端所有要用到图片的地方使用css背景图片、通过背景定位来展示对应的图片。优势呢，就是减少了一大堆http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端性能优化：图片篇">
+<meta property="og:url" content="http://ensorrow.github.io/2016/05/05/前端性能优化：图片篇/index.html">
+<meta property="og:site_name" content="吕哲扬的个人博客">
+<meta property="og:description" content="前端图片优化的问题一直以来都是热门话题，从需求上来看，很多的站点往往是图片体积大于代码体积，图片请求多于代码文件请求，给前端的性能带来了很大的困扰。那么解决方案呢？🌚
+一.雪碧图+图片压缩什么是雪碧图呢，雪碧图即css sprites，是一种把一堆小图片拼成一张大图的简单粗暴的技术，拼完以后前端所有要用到图片的地方使用css背景图片、通过背景定位来展示对应的图片。优势呢，就是减少了一大堆http">
+<meta property="og:updated_time" content="2016-11-21T06:14:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端性能优化：图片篇">
+<meta name="twitter:description" content="前端图片优化的问题一直以来都是热门话题，从需求上来看，很多的站点往往是图片体积大于代码体积，图片请求多于代码文件请求，给前端的性能带来了很大的困扰。那么解决方案呢？🌚
+一.雪碧图+图片压缩什么是雪碧图呢，雪碧图即css sprites，是一种把一堆小图片拼成一张大图的简单粗暴的技术，拼完以后前端所有要用到图片的地方使用css背景图片、通过背景定位来展示对应的图片。优势呢，就是减少了一大堆http">
+    
+
+    
+
+    
+        <link rel="icon" href="/" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?94ead7d7a5262d5a07746f42b4847057# enter Baidu Analytics hash key";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">吕哲扬的个人博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/category">目录</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/category">目录</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/avatar.jpg" />
+            <h2 id="name">ZheyangLv</h2>
+            <h3 id="title">前端开发，学生</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>陕西西安</span>
+            <a id="follow" target="_blank" href="https://github.com/ensorrow/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                23
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/ensorrow" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-前端性能优化：图片篇" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            前端性能优化：图片篇
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/05/前端性能优化：图片篇/">
+            <time datetime="2016-05-05T14:30:19.000Z" itemprop="datePublished">2016-05-05</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/EUX/">EUX</a>, <a class="tag-link" href="/tags/前端性能/">前端性能</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>前端图片优化的问题一直以来都是热门话题，从需求上来看，很多的站点往往是图片体积大于代码体积，图片请求多于代码文件请求，给前端的性能带来了很大的困扰。那么解决方案呢？🌚</p>
+<h3 id="一-雪碧图-图片压缩"><a href="#一-雪碧图-图片压缩" class="headerlink" title="一.雪碧图+图片压缩"></a>一.雪碧图+图片压缩</h3><p>什么是雪碧图呢，雪碧图即css sprites，是一种把一堆小图片拼成一张大图的简单粗暴的技术，拼完以后前端所有要用到图片的地方使用css背景图片、通过背景定位来展示对应的图片。优势呢，就是减少了一大堆http请求，这个时候缺点就很明显了🌚，由于需要使用背景图片定位，图片大小最好得是确定的（不确定的话就用rem来算），然后还有起一大堆不同的class名来区分各个图片，逼死起名困难症🌚。</p>
+<p>图片压缩就很简单粗暴了，无损压缩嘛，还有切图格式的问题</p>
+<blockquote>
+<ul>
+<li>优先用 png 而不是 gif</li>
+<li>压缩 png</li>
+<li>去掉 jpg 的 metadata</li>
+<li>压缩 gif 动画</li>
+<li>尝试使用 png8</li>
+<li>避免使用 AlphaImageLoader</li>
+<li>压缩动态生成的图像</li>
+<li>使 favicon 更小 可缓存</li>
+<li>使用 CSS Sprites</li>
+</ul>
+</blockquote>
+<h3 id="二-base64"><a href="#二-base64" class="headerlink" title="二.base64"></a>二.base64</h3><p>base64是个什么东西呢？看一看用法就明白了</p>
+<pre><code>&lt;img src=&quot;data:imagegif;base64,AAAA&quot;&gt;
+//或者像这样，在css里
+background-image: url(data:imagegif;base64,AAAA)
+</code></pre><p>图片的编码已经在base64编码里了，浏览器解析出来那段代码就成功加载了那张图片，一般来说base6编码的大小比原图大小要稍大些，那用它的优势在哪呢🌚，还是减少http请求，性能方面的话，自己衡量一下是那点带宽影响更大还是额外请求影响更大再决定用不用吧。</p>
+<a id="more"></a>
+<h3 id="三-响应式图片"><a href="#三-响应式图片" class="headerlink" title="三.响应式图片"></a>三.响应式图片</h3><p>为了得到更好的显示效果，一般我们会使用更加高清的图片然后设置<code>max-width:100%</code>，不可避免的图片会很大，那么如果我的设备屏幕实际上很小，那就完全没必要加载那么大的图片了，小的就可以满足清晰度要求，这个时候就要使用到响应式图片。</p>
+<p>主要用到的其实就是srcset属性和sizes属性，看一个小的demo</p>
+<pre><code>&lt;img src=&quot;image1.jpg&quot; srcset=&quot;image2.jpg 256w,image1.jpg 512w&quot; sizes=&quot;(min-width: 36em) 33.3vw,
+    100vw&quot;&gt;
+</code></pre><p>其中的256w和512w作为对应图片链接的描述符，一般使用128w,256w,512w分别对应1x,2x,3x屏幕，至于后面的sizes，括号内容表示媒体查询条件，第一个为满足条件的尺寸，第二个为不满足条件尺寸。<strong>图片只在页面加载时根据屏幕像素密度和viewport宽度加载</strong>，与css响应式是不一样的。</p>
+<h3 id="四-延迟加载"><a href="#四-延迟加载" class="headerlink" title="四.延迟加载"></a>四.延迟加载</h3><p>假设我的网页很长很长，图片很多很多（比如多图慎点那种），但是我可能看了一下就没兴趣了，那是不是完全没有必要加载后面的图片了，这个时候就要有一个延迟加载的思想。</p>
+<p>图片延迟加载也称懒加载，通常应用于图片比较多的网页，如果一个页面图片比较多，且页面高度或宽度有好几屏，页面初次加载时，只显示可视区域的图片（非可视区域图片使用1*1的图片占位，图片大小css控制），当页面滚动的时候，图片进入了可视区域再进行加载（修改src），这样可以显著的提高页面的加载速度，更少的图片并发请求数也可以减轻服务器的压力。如果用户仅仅在首屏停留，还可以节省流量。具体的实现方法可以看一个插件，就叫lazeload。</p>
+<h3 id="五-图标字体"><a href="#五-图标字体" class="headerlink" title="五.图标字体"></a>五.图标字体</h3><p>用过bootstrap的同学肯定对方便的fontawesome图标字体印象深刻，可以无损放大缩小，可以修改颜色，只要加个类名就可以使用图标，感觉是不是很爽🌚。优势呢。。。矢量&amp;方便好用，不过图标没有一定的量可能不大需要，而且矢量图可能美工压力也比较大，我们只要知道怎么用就行啦，有的时候用现成的图标减轻一下美工同学的工作量也是极好的。可以看一下一个专门用来做图标字体的网站。</p>
+<p><a href="http://www.w3cways.com/942.html" target="_blank" rel="external">阿里UX矢量图标库–最强大的矢量图标库-Icon font制作力荐工具</a></p>
+<h3 id="六-svg"><a href="#六-svg" class="headerlink" title="六.svg"></a>六.svg</h3><p>svg作为矢量图，和iconfont对比起来优势可能就是字体可能在样式修改方面受限较多，其次字体文件一般都弄的挺大的，然后兼容性差点。svg也可以认为就是图片，使用方法也很简单。</p>
+<p>1.直接作为图片文件引入 </p>
+<pre><code>&lt;img src=“gblogo.svg” onerror=“this.onerror=null; this.src=”gblogo.png“”&gt;
+//or css 
+background:url(gblogo.svg)
+</code></pre><p>2.将svg代码拷到html文件里</p>
+<pre><code>&lt;g class=“logo” transform=“translate（0.000000，500.000000） scale（0.100000，-0.100000）” fill=“#000000” stroke=“none”&gt;
+//本质上还是一个标签，可以定义样式
+.logo:hover{
+    fill： #F08000;}
+</code></pre><p>前端没啥问题，看美工愿不愿意做啦~😆</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://ensorrow.github.io/2016/05/05/前端性能优化：图片篇/" data-id="civrri8h4000krp8wma3gtstv" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://ensorrow.github.io/2016/05/05/前端性能优化：图片篇/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://ensorrow.github.io/2016/05/05/前端性能优化：图片篇/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/05/21/EUX-PC页面开发完整流程/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    EUX PC页面开发完整流程
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/04/30/js基础巩固/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">js基础巩固（一）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/05/05/前端性能优化：图片篇/" data-title="前端性能优化：图片篇" data-url="http://ensorrow.github.io/2016/05/05/前端性能优化：图片篇/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/07/微信小程序初探/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/07/微信小程序初探/" class="title">微信小程序初探</a></p>
+                            <p class="item-date"><time datetime="2016-11-07T07:48:16.000Z" itemprop="datePublished">2016-11-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/05/Angular学习笔记（一）/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/05/Angular学习笔记（一）/" class="title">Angular学习笔记（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-05T08:45:07.000Z" itemprop="datePublished">2016-11-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/19/前端入门-HTML-CSS基础/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/09/19/前端入门-HTML-CSS基础/" class="title">前端入门-HTML+CSS基础</a></p>
+                            <p class="item-date"><time datetime="2016-09-19T05:08:07.000Z" itemprop="datePublished">2016-09-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/06/ES6学习笔记/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/06/ES6学习笔记/" class="title">ES6学习笔记</a></p>
+                            <p class="item-date"><time datetime="2016-08-06T07:47:20.000Z" itemprop="datePublished">2016-08-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/05/正则表达式从入门到放弃/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/05/正则表达式从入门到放弃/" class="title">正则表达式从入门到放弃</a></p>
+                            <p class="item-date"><time datetime="2016-08-05T10:48:23.000Z" itemprop="datePublished">2016-08-05</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ajax/">Ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EUX/">EUX</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETEASE/">NETEASE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-X/">OS-X</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Native/">React Native</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/">Redux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eeyes/">eeyes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jQuery/">jQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/">jquery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wechat/">wechat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端性能/">前端性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑苹果/">黑苹果</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/EUX/" style="font-size: 20px;">EUX</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/NETEASE/" style="font-size: 15px;">NETEASE</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/OS-X/" style="font-size: 10px;">OS-X</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/Redux/" style="font-size: 15px;">Redux</a> <a href="/tags/Regular/" style="font-size: 15px;">Regular</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/eeyes/" style="font-size: 10px;">eeyes</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/前端性能/" style="font-size: 10px;">前端性能</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/黑苹果/" style="font-size: 10px;">黑苹果</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.eeyes.net">e瞳网</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 吕哲扬<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'ensorrow'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>前端基础研究 | 吕哲扬的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="基础分类：
+
+HTML基础
+CSS基础
+Js基础
+
+每一项的细分下来大概是这个样子
+
+HTML+CSS1、盒子模型，块级元素和行内元素特性与区别。2、行内块的使用，兼容性解决。3、清除浮动的方式以及各自的优劣。4、文档流的概念、定位的理解以及z-index计算规则&amp;amp;浏览器差异性。5、CSS选择器以及优先级计算。6、常用的CSS hack。7、遇到的兼容性问题与解决方法。8、垂直水平居中的实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端基础研究">
+<meta property="og:url" content="http://ensorrow.github.io/2016/03/11/前端基础研究/index.html">
+<meta property="og:site_name" content="吕哲扬的个人博客">
+<meta property="og:description" content="基础分类：
+
+HTML基础
+CSS基础
+Js基础
+
+每一项的细分下来大概是这个样子
+
+HTML+CSS1、盒子模型，块级元素和行内元素特性与区别。2、行内块的使用，兼容性解决。3、清除浮动的方式以及各自的优劣。4、文档流的概念、定位的理解以及z-index计算规则&amp;amp;浏览器差异性。5、CSS选择器以及优先级计算。6、常用的CSS hack。7、遇到的兼容性问题与解决方法。8、垂直水平居中的实">
+<meta property="og:updated_time" content="2016-11-21T06:14:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端基础研究">
+<meta name="twitter:description" content="基础分类：
+
+HTML基础
+CSS基础
+Js基础
+
+每一项的细分下来大概是这个样子
+
+HTML+CSS1、盒子模型，块级元素和行内元素特性与区别。2、行内块的使用，兼容性解决。3、清除浮动的方式以及各自的优劣。4、文档流的概念、定位的理解以及z-index计算规则&amp;amp;浏览器差异性。5、CSS选择器以及优先级计算。6、常用的CSS hack。7、遇到的兼容性问题与解决方法。8、垂直水平居中的实">
+    
+
+    
+
+    
+        <link rel="icon" href="/" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?94ead7d7a5262d5a07746f42b4847057# enter Baidu Analytics hash key";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">吕哲扬的个人博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/category">目录</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/category">目录</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/avatar.jpg" />
+            <h2 id="name">ZheyangLv</h2>
+            <h3 id="title">前端开发，学生</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>陕西西安</span>
+            <a id="follow" target="_blank" href="https://github.com/ensorrow/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                23
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/ensorrow" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-前端基础研究" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            前端基础研究
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/03/11/前端基础研究/">
+            <time datetime="2016-03-11T11:54:56.000Z" itemprop="datePublished">2016-03-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/前端/">前端</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>基础分类：</p>
+<ol>
+<li>HTML基础</li>
+<li>CSS基础</li>
+<li>Js基础</li>
+</ol>
+<p>每一项的细分下来大概是这个样子</p>
+<blockquote>
+<p>HTML+CSS<br>1、盒子模型，块级元素和行内元素特性与区别。<br>2、行内块的使用，兼容性解决。<br>3、清除浮动的方式以及各自的优劣。<br>4、文档流的概念、定位的理解以及z-index计算规则&amp;浏览器差异性。<br>5、CSS选择器以及优先级计算。<br>6、常用的CSS hack。<br>7、遇到的兼容性问题与解决方法。<br>8、垂直水平居中的实现方式。<br>9、常用布局的实现（两列布局、三列适应布局，两列等高适应布局等）。<br>Javascript<br>1、犀牛书封面的犀牛属于神马品种？（蛋逼活跃气氛用。。。犀牛书指js权威指南）<br>2、常用的浏览器内核。<br>3、常用的DOM操作，新建、添加、删除、移动、查找等。<br>4、String于Array常用方法。<br>5、设备与平台监测。<br>6、DOM的默认事件、事件模型、事件委托、阻止默认事件、冒泡事件的方式等。<br>7、jQuery的bind、live、on、delegate的区别（考察点与上一条重叠，切入点不同）。<br>8、JS变量提升、匿名函数、原型继承、作用域、闭包机制等。<br>9、对HTTP协议的理解。<br>10、Ajax的常用操作，JS跨域的实现原理。<br>作者：MicroMao<br>链接：<a href="http://www.zhihu.com/question/19568008/answer/23317398" target="_blank" rel="external">http://www.zhihu.com/question/19568008/answer/23317398</a><br>来源：知乎</p>
+</blockquote>
+<a id="more"></a>
+<p>自己补充一些其他细节：</p>
+<ol>
+<li>前端性能（如延迟加载）</li>
+<li>本地存储（LocalStorage的设计目的）</li>
+</ol>
+<p>东西很杂，一项一项来。</p>
+<h2 id="HTML-amp-CSS部分"><a href="#HTML-amp-CSS部分" class="headerlink" title="HTML&amp;CSS部分"></a>HTML&amp;CSS部分</h2><h3 id="一、行内块的使用"><a href="#一、行内块的使用" class="headerlink" title="一、行内块的使用"></a>一、行内块的使用</h3><p>涉及的知识点：HTML规范与浏览器解析的问题</p>
+<pre><code>&lt;span style=&quot;background: red;&quot;&gt;
+    haha
+    &lt;h1 style=&quot;background: #ccc;&quot;&gt;hdjs&lt;/h1&gt;
+    哈哈哈
+&lt;/span&gt;
+</code></pre><h3 id="二、清除浮动的方式"><a href="#二、清除浮动的方式" class="headerlink" title="二、清除浮动的方式"></a>二、清除浮动的方式</h3><p>典型应用场景：</p>
+<pre><code>&lt;div id=&quot;outer&quot;&gt;     
+  &lt;div id=&quot;inner&quot;&gt; &lt;h2&gt;A Column&lt;/h2&gt; &lt;/div&gt;     
+  &lt;h1&gt;Main Content&lt;/h1&gt;     
+  &lt;p&gt;Lorem ipsum&lt;/p&gt;     
+&lt;/div&gt;  
+</code></pre><p>如果给inner加一个浮动的话，由于它脱离了文档流会使outer容器塌陷（如果容器是由该浮动元素撑起来的话），为了实现我们想要的效果，就需要清除浮动，典型的几种方法</p>
+<ol>
+<li>在outer最后加一个空的块级元素<code>&lt;div style=&#39;clear:both&#39;&gt;&lt;/div&gt;</code>（或者使用伪类）</li>
+<li>给outer添加<code>overflow: auto</code></li>
+</ol>
+<blockquote>
+<p>解释一下2的方法，使用overflow以后会触发BFC（Block Formatting Context），BFC要求其内部元素无法影响其外部元素，为了做到这一点BFC计算高度时必须将float元素也计算在内</p>
+</blockquote>
+<h3 id="三、文档流和文本流的概念"><a href="#三、文档流和文本流的概念" class="headerlink" title="三、文档流和文本流的概念"></a>三、文档流和文本流的概念</h3><p>所谓文档流，就是说按照文档的顺序从上到下，从左到右排列元素。脱离文档流呢，就是说将某个元素从文档流抽离出来，按照另一个规则进行摆放（position:absolute||fixed，float应该是没有脱离文档流的）。</p>
+<p>说到文档流自然就要提到z-index了，只有加了position属性的元素使用z-index才能生效（事实上除了float之外只有position这有z-index的应用场景了吧）。z-index的使用要注意的一个使用场景是：</p>
+<blockquote>
+<p>定位元素A（z-index:100）里面有定位元素A1（z-index:300），而定位元素B和元素A兄弟关系（z-index:200）。你会发现无论A1的z-index是多大，也会被z-index是200的B所覆盖，因为A的z-index只有100。</p>
+</blockquote>
+<p>解释为在相同的stacking context下才会用z-index来决定先后，不同时则由stacking context的z-index来决定（A和B均为stacing context）。</p>
+<p>至于文本流呢。。。反正它和布局没有关系就对了，是计算机基础的概念吧。</p>
+<h3 id="四、浏览器差异"><a href="#四、浏览器差异" class="headerlink" title="四、浏览器差异"></a>四、浏览器差异</h3><p>浏览器内核即浏览器的渲染引擎（排版引擎），大概可以分为以下几种：</p>
+<ol>
+<li>Trident（又称IE内核）</li>
+<li>Gecko（Firefox内核）</li>
+<li>Webkit（Safari内核,Chrome内核Chormium原型,开源）</li>
+<li>Blink（Chrome &amp; Opera开发）</li>
+</ol>
+<p>除了渲染引擎还有JavaScript引擎，如经常听的Chrome的V8引擎。</p>
+<p>那么浏览器的兼容性问题一般都处在渲染引擎上，举个最简单的例子，在不同的浏览器上，各种元素自带的margin、padding必然不尽相同，所以往往我们都要在CSS开始加上这一段：</p>
+<pre><code>*{
+    margin: 0;
+    padding: 0;
+}
+</code></pre><p>其他的问题诸如IE6的双倍mairgin问题，img标签的默认间距问题（float解决）等等，解决方法一般是采用CSS hack，如IE6可以认识_height、<em>height，IE7可以认识 </em>height等。不过随着时代发展越来越少关心这些问题啦。</p>
+<h3 id="五、选择器的优先级计算"><a href="#五、选择器的优先级计算" class="headerlink" title="五、选择器的优先级计算"></a>五、选择器的优先级计算</h3><p>按照优先级顺序从高到低排列：</p>
+<ol>
+<li>标签内样式（严格说不算选择器），1000</li>
+<li>ID选择器，100</li>
+<li>Class选择器，10</li>
+<li>元素名选择器，1</li>
+</ol>
+<p>使用后代选择器累加，与选择器相乘即可。</p>
+<h3 id="六、常用布局的实现方法"><a href="#六、常用布局的实现方法" class="headerlink" title="六、常用布局的实现方法"></a>六、常用布局的实现方法</h3><h4 id="水平居中的实现："><a href="#水平居中的实现：" class="headerlink" title="水平居中的实现："></a>水平居中的实现：</h4><ol>
+<li>text-align:center（行内元素）</li>
+<li>margin:0 auto</li>
+<li>position: relative||absolute &amp;&amp; left: 50% &amp;&amp; margin-left: 0.5*width||transform: translateY(-50%)</li>
+<li>justify-content: center</li>
+</ol>
+<h4 id="垂直居中的实现"><a href="#垂直居中的实现" class="headerlink" title="垂直居中的实现"></a>垂直居中的实现</h4><ol>
+<li>height = line-height</li>
+<li>align-items: center</li>
+<li>paddingTop = paddingBottom</li>
+<li>position</li>
+</ol>
+<h4 id="常用的两栏布局"><a href="#常用的两栏布局" class="headerlink" title="常用的两栏布局"></a>常用的两栏布局</h4><p>定宽+自适应</p>
+<ol>
+<li>float+margin-left</li>
+<li>float+overflow(BFC)</li>
+<li>flex</li>
+</ol>
+<hr>
+<h2 id="js部分"><a href="#js部分" class="headerlink" title="js部分"></a>js部分</h2><h3 id="一、常用的String和Array操作"><a href="#一、常用的String和Array操作" class="headerlink" title="一、常用的String和Array操作"></a>一、常用的String和Array操作</h3><h5 id="String操作"><a href="#String操作" class="headerlink" title="String操作"></a>String操作</h5><ol>
+<li>获取类方法</li>
+</ol>
+<ul>
+<li>charAt(index)，返回对应位置的字符</li>
+</ul>
+<ol>
+<li>查找类方法</li>
+</ol>
+<ul>
+<li>indexOf(searchValue, fromIndex)，从fromIndex处开始查找searchValue，返回对应的index</li>
+<li>lastIndexOf(seaarchValue, fromIndex)</li>
+<li>search(substr || regexp)，返回匹配字符串的起始位置或-1（如果不存在）</li>
+<li>match(substr || regexp)，若传入substr，则返回一个数组如[“b”, index: 3, input: “1a2b3c4d5e”]；传入正则则返回所有符合要求的字符串如[“1”, “2”]。</li>
+</ul>
+<ol>
+<li>截取类方法</li>
+</ol>
+<ul>
+<li>substring(start, end)，返回截取的字符串</li>
+<li>slice(start, end)，参数可以为负值（即从倒数几位截取）</li>
+<li>substr(start, length)</li>
+</ul>
+<ol>
+<li>其他类型方法</li>
+</ol>
+<ul>
+<li>replace(regexp || substr, replacement)，将匹配的字符串替换成想要的字符串</li>
+<li>split(seperator, howmany)，将字符串按照设置的seperator进行切割，返回最大长度为Howmany参数的数组</li>
+<li>toLowerCase &amp;&amp; toUpperCase</li>
+</ul>
+<h5 id="Array操作"><a href="#Array操作" class="headerlink" title="Array操作"></a>Array操作</h5><ul>
+<li>shift()，删除数组的第一项，返回删除值</li>
+<li>pop()，删除数组的最后一项，返回删除值</li>
+<li>unshift(arg1, arg2 …)，将参数添加到数组开头，返回新数组长度</li>
+<li>push(arg1, arg2 …)，将参数添加到数组末尾，返回新数组长度</li>
+<li>concat(arg1, arg2 …)，复制原数组，将参数添加到新数组末尾且不修改原数组，返回新数组</li>
+<li>splice(start, deleteCount, var1, var2 …)，从start位置开始删除deleteCount项，并从该位置起插入val1,val2,… </li>
+<li>reverse()，将数组反序</li>
+<li>sort()，将数组按照字符编码排序（一般数字为从小到大）</li>
+<li>slice(satrt, end)，与字符串操作相同</li>
+<li>join(separator)，将数组用separator连接成字符串</li>
+</ul>
+<h3 id="二、浏览器判断"><a href="#二、浏览器判断" class="headerlink" title="二、浏览器判断"></a>二、浏览器判断</h3><p>js通过userAgent来判断浏览器类型，看一个DEMO应该很好理解</p>
+<pre><code>var sUserAgent = navigator.userAgent.toLowerCase();
+var isIpad = sUserAgent.match(/ipad/i) == &apos;ipad&apos;;
+var isUc = sUserAgent.match(/ucweb/i) == &apos;ucweb&apos;;
+
+if( isIpad ){
+    window.localtion.href = &quot;link1&quot;
+} else {
+    window.localtion.href = &apos;link2&apos;
+}
+</code></pre><h3 id="三、call-apply-amp-bind"><a href="#三、call-apply-amp-bind" class="headerlink" title="三、call,apply&amp;bind"></a>三、call,apply&amp;bind</h3><ul>
+<li>call，第一个参数为要修改的上下文对象（this），后面为调用的函数自己的参数</li>
+<li>apply，与call类似，但函数自己的参数放在一个数组里</li>
+<li>bind，返回一个改变了上下文的函数，之后链式调用</li>
+</ul>
+<p>看一个DEMO就明白了</p>
+<pre><code>var name = &apos;global&apos;;
+var person = {
+    name: &apos;zero&apos;
+};
+// 输出姓名、年龄和职业
+function printInfo(age, job) {
+    console.log(this.name, age, job);
+}
+// 直接调用
+printInfo(20, &apos;前端工程师&apos;);
+// 打印：global 20 前端工程师
+// 因为默认的上下文是window，所以this.name是全局定义的global，如果我们想打印出来zero的话，就需要改变函数执行的上下文
+printInfo.call(person, 20, &apos;前端工程师&apos;);
+printInfo.apply(person, [20, &apos;前端工程师&apos;]);
+// 这两种方式是一样的，第一个参数都是传进去的上下文，this.name取的是person.name，所以打印出来的名字就是zero了，后面的为age和job，只是参数传递的方式不一样，apply比较特殊，把要传的参数放在数组里面
+// 而bind和以上两种有区别，bind是es5定义的新方法，用来返回一个有自己上下文的函数，用法也比较类似：
+printInfo.bind(person)(20, &apos;前端工程师&apos;);
+// printInfo.bind(person)这一块是返回的以peron为上下文的函数，后面的(20, &apos;前端工程师&apos;)是函数调用
+引用自百度知道
+</code></pre><h3 id="四、前端本地存储"><a href="#四、前端本地存储" class="headerlink" title="四、前端本地存储"></a>四、前端本地存储</h3><p>需要了解的就是历史悠久的cookie和新的HTML5本地存储特性了。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://ensorrow.github.io/2016/03/11/前端基础研究/" data-id="civrri8h2000jrp8w6y1w9eu5" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://ensorrow.github.io/2016/03/11/前端基础研究/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://ensorrow.github.io/2016/03/11/前端基础研究/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/03/17/jQuery入门/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    jQuery入门
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/03/10/EUX开发环境配置/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">EUX开发环境配置</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/03/11/前端基础研究/" data-title="前端基础研究" data-url="http://ensorrow.github.io/2016/03/11/前端基础研究/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/07/微信小程序初探/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/07/微信小程序初探/" class="title">微信小程序初探</a></p>
+                            <p class="item-date"><time datetime="2016-11-07T07:48:16.000Z" itemprop="datePublished">2016-11-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/05/Angular学习笔记（一）/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/05/Angular学习笔记（一）/" class="title">Angular学习笔记（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-05T08:45:07.000Z" itemprop="datePublished">2016-11-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/19/前端入门-HTML-CSS基础/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/09/19/前端入门-HTML-CSS基础/" class="title">前端入门-HTML+CSS基础</a></p>
+                            <p class="item-date"><time datetime="2016-09-19T05:08:07.000Z" itemprop="datePublished">2016-09-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/06/ES6学习笔记/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/06/ES6学习笔记/" class="title">ES6学习笔记</a></p>
+                            <p class="item-date"><time datetime="2016-08-06T07:47:20.000Z" itemprop="datePublished">2016-08-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/05/正则表达式从入门到放弃/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/05/正则表达式从入门到放弃/" class="title">正则表达式从入门到放弃</a></p>
+                            <p class="item-date"><time datetime="2016-08-05T10:48:23.000Z" itemprop="datePublished">2016-08-05</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ajax/">Ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EUX/">EUX</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETEASE/">NETEASE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-X/">OS-X</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Native/">React Native</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/">Redux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eeyes/">eeyes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jQuery/">jQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/">jquery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wechat/">wechat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端性能/">前端性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑苹果/">黑苹果</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/EUX/" style="font-size: 20px;">EUX</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/NETEASE/" style="font-size: 15px;">NETEASE</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/OS-X/" style="font-size: 10px;">OS-X</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/Redux/" style="font-size: 15px;">Redux</a> <a href="/tags/Regular/" style="font-size: 15px;">Regular</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/eeyes/" style="font-size: 10px;">eeyes</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/前端性能/" style="font-size: 10px;">前端性能</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/黑苹果/" style="font-size: 10px;">黑苹果</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.eeyes.net">e瞳网</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 吕哲扬<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'ensorrow'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

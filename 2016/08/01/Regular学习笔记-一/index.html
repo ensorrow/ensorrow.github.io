@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Regular学习笔记(一) | 吕哲扬的个人博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="regular笔记：Regular是一个类似于react，vue的轻量框架
+
+一. 模板语法首先要知道模板的语法类型，总共只有两种语句：功能语句&amp;amp;插值语句
+功能语句就像这样：
+{#list Expression as Var } ... {/list}
+有开有闭，开闭符号貌似是可以自定义的。
+插值语句是传统的mustache，直接{ Expression }就行了。
+所有的express">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Regular学习笔记(一)">
+<meta property="og:url" content="http://ensorrow.github.io/2016/08/01/Regular学习笔记-一/index.html">
+<meta property="og:site_name" content="吕哲扬的个人博客">
+<meta property="og:description" content="regular笔记：Regular是一个类似于react，vue的轻量框架
+
+一. 模板语法首先要知道模板的语法类型，总共只有两种语句：功能语句&amp;amp;插值语句
+功能语句就像这样：
+{#list Expression as Var } ... {/list}
+有开有闭，开闭符号貌似是可以自定义的。
+插值语句是传统的mustache，直接{ Expression }就行了。
+所有的express">
+<meta property="og:updated_time" content="2016-11-21T06:14:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Regular学习笔记(一)">
+<meta name="twitter:description" content="regular笔记：Regular是一个类似于react，vue的轻量框架
+
+一. 模板语法首先要知道模板的语法类型，总共只有两种语句：功能语句&amp;amp;插值语句
+功能语句就像这样：
+{#list Expression as Var } ... {/list}
+有开有闭，开闭符号貌似是可以自定义的。
+插值语句是传统的mustache，直接{ Expression }就行了。
+所有的express">
+    
+
+    
+
+    
+        <link rel="icon" href="/" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?94ead7d7a5262d5a07746f42b4847057# enter Baidu Analytics hash key";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                
+                <span class="site-title">吕哲扬的个人博客</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">首页</a>
+                
+                    <a class="main-nav-link" href="/archives">归档</a>
+                
+                    <a class="main-nav-link" href="/category">目录</a>
+                
+                    <a class="main-nav-link" href="/tags">标签</a>
+                
+                    <a class="main-nav-link" href="/">关于</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">首页</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">归档</a></td>
+                
+                    <td><a class="main-nav-link" href="/category">目录</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">标签</a></td>
+                
+                    <td><a class="main-nav-link" href="/">关于</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/images/avatar.jpg" />
+            <h2 id="name">ZheyangLv</h2>
+            <h3 id="title">前端开发，学生</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>陕西西安</span>
+            <a id="follow" target="_blank" href="https://github.com/ensorrow/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                18
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                23
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/ensorrow" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Regular学习笔记-一" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Regular学习笔记(一)
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/01/Regular学习笔记-一/">
+            <time datetime="2016-08-01T11:03:41.000Z" itemprop="datePublished">2016-08-01</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/NETEASE/">NETEASE</a>, <a class="tag-link" href="/tags/Regular/">Regular</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>regular笔记：Regular是一个类似于react，vue的轻量框架</p>
+</blockquote>
+<h2 id="一-模板语法"><a href="#一-模板语法" class="headerlink" title="一. 模板语法"></a>一. 模板语法</h2><p>首先要知道模板的语法类型，总共只有两种语句：功能语句&amp;插值语句</p>
+<p>功能语句就像这样：</p>
+<pre><code>{#list Expression as Var } ... {/list}
+</code></pre><p>有开有闭，开闭符号貌似是可以自定义的。</p>
+<p>插值语句是传统的mustache，直接<code>{ Expression }</code>就行了。</p>
+<p>所有的expression在编译之后会成为一个表达式对象，使用<code>$expression</code>来访问它，表达式对象有两个部分：get()&amp;set()</p>
+<ul>
+<li><h3 id="get-context"><a href="#get-context" class="headerlink" title="get(context)"></a>get(context)</h3></li>
+</ul>
+<p>看DEMO比较好懂</p>
+<pre><code>// 定义一个组件
+ var component = new Regular({
+   data: {
+     user: &apos;leeluolee&apos;,
+     age: 20 
+   }
+ });
+ // 通过$expression传入自定义参数创建组件的表达式对象实例
+ var expr = component.$expression(&quot;user + &apos;:&apos; + (age - 10)&quot;)
+ // 调用实例的get方法，传入组件对象
+ alert(expr.get(component) === &quot;leeluolee:10&quot; ) //true
+</code></pre><ul>
+<li><h3 id="set-context-value"><a href="#set-context-value" class="headerlink" title="set(context, value)"></a>set(context, value)</h3></li>
+</ul>
+<a id="more"></a>
+<p>同样还是看DEMO，很好理解</p>
+<pre><code>// component as context
+  var component = new Regular({
+    data: {
+      users: [
+        {name: &apos;leeluolee&apos;},
+        {name: &apos;luobo&apos;}
+      ],
+      index:0
+    }
+  });
+
+  var expr = component.$expression(&apos;users[index].name&apos;)
+
+  expr.set(component, &apos;daluobo&apos;);
+
+  alert(component.data.users[0].name === &apos;daluobo&apos;) // true
+</code></pre><h2 id="二-指令"><a href="#二-指令" class="headerlink" title="二. 指令"></a>二. 指令</h2><p>和vue类似，regular也有一套自己的指令系统。当rugular解析到一个属性，首先会去查是否是一个注册指令（预设or自定义），是则交由指令的<strong>link函数</strong>，否则视为普通属性。首先看看如何自定义指令。</p>
+<h3 id="定义指令"><a href="#定义指令" class="headerlink" title="定义指令"></a>定义指令</h3><p>每一个组件可以通过<code>Component.directive</code>来扩展指令，其中的核心为link函数</p>
+<h4 id="link-element-value-attrs"><a href="#link-element-value-attrs" class="headerlink" title="link(element, value, attrs)"></a>link(element, value, attrs)</h4><p>element为指令绑定的节点，value可以传入值或表达式，attrs指节点上的属性列表，如</p>
+<pre><code>Regular.directive(&apos;r-html&apos;, function(elem, value){
+  this.$watch(value, function(newValue){
+    elem.innerHTML = newValue
+  })
+})
+</code></pre><p>如果希望销毁这个函数，只需要在link函数执行末返回一个新的函数</p>
+<pre><code>return function(){
+    //新的link函数
+}
+</code></pre><h3 id="内建指令（预设）"><a href="#内建指令（预设）" class="headerlink" title="内建指令（预设）"></a>内建指令（预设）</h3><ul>
+<li>r-model（数据双向绑定）</li>
+<li>r-style（行内计算样式）</li>
+<li>r-class（如判断class是否为active）</li>
+<li>r-hide（节点是否展示）</li>
+<li>r-html（类似于xss）</li>
+<li>r-animation（声明式动画）</li>
+</ul>
+<p>具体使用时查阅api文档。</p>
+<p>指令被用来代替一些常用的DOM操作，但还有一些DOM操作是指令不便于胜任的，regular使用<code>Regular.DOM</code>实现了一部分诸如DOM插入、DOM删除的功能</p>
+<h4 id="Regular-dom-inject-element-refer-direction"><a href="#Regular-dom-inject-element-refer-direction" class="headerlink" title="Regular.dom.inject(element, refer, direction)"></a>Regular.dom.inject(element, refer, direction)</h4><p>DOM插入操作。element指要被插入的节点，refer指参考节点，direction指组件插入的位置，有‘top’, ‘bottom’, ‘after’, or ‘before’四个参数可选。</p>
+<h4 id="Regular-dom-on-element-event-handle"><a href="#Regular-dom-on-element-event-handle" class="headerlink" title="Regular.dom.on(element, event, handle)"></a>Regular.dom.on(element, event, handle)</h4><p>这个方法中的event对象已被修正（兼容IE6-8），回调也被修正为element对象本身。见DEMO：</p>
+<pre><code>var dom = Regular.dom;
+
+dom.on(element, &apos;click&apos;, function(ev){
+  ev.preventDefault();
+})
+</code></pre><p>其他的dom操作比较简单，列一下就行了</p>
+<ul>
+<li>Regular.dom.off(node, event, handle)</li>
+<li>Regular.dom.addClass(element, className)</li>
+<li>Regular.dom.delClass(element, className)</li>
+<li>Regular.dom.text(element[, value])</li>
+<li>Regular.dom.html(element[, value])</li>
+<li>Regular.dom.attr(element, name [ , value])</li>
+</ul>
+<h2 id="三-组件"><a href="#三-组件" class="headerlink" title="三. 组件"></a>三. 组件</h2><p>组件 = 模板 + 数据 + 业务逻辑，是一种独立的，可复用的交互元素的封装。</p>
+<p>组件的定义很简单，直接看DEMO：</p>
+<pre><code>var Component = Regular.extend( options );
+var SubComponent = Component.extend( options );
+
+var sub = new SubComponent;
+var component = new Component;
+
+console.log(sub instanceof Regular) // true
+console.log(sub instanceof Component) // true
+console.log(sub instanceof SubComponent) // true
+</code></pre><p>options对象有以下几个属性：</p>
+<ul>
+<li><strong>template</strong></li>
+<li>config</li>
+<li>init</li>
+<li>destroy</li>
+<li>name</li>
+<li><strong>event</strong></li>
+<li>data</li>
+</ul>
+<p>其中的name是指该组件注册到父组件命名空间的名称，以便于在父组件中内嵌使用</p>
+<pre><code>var Component = SuperComponent.extend({
+  //other options
+  name: &apos;foo1&apos;
+})
+
+var Component2 = SuperComponent.extend({
+  template: &quot;&lt;foo1&gt;&lt;/foo1&gt;&quot;
+})
+</code></pre><p>也可以通过<code>Component.component</code>来注册</p>
+<pre><code>var Component = SuperComponent.extend({});
+//第一个参数为注册名称，第二个为父组件
+SuperComponent.component(&apos;foo1&apos;, Component)
+</code></pre><p>其他的参数自行查阅<a href="http://regularjs.github.io/reference/?api-zh#api-reference-静态接口-options" target="_blank" rel="external">API文档-静态接口-options</a>。</p>
+<h4 id="组件初始化"><a href="#组件初始化" class="headerlink" title="组件初始化"></a>组件初始化</h4><p>定义了一个组件之后，可以以两种方式进行初始化。比如说定义一个Pager组件：</p>
+<pre><code>var Pager = Regular.extend({
+  name: &apos;pager&apos;
+  // other options
+})
+</code></pre><p>进行初始化的两种方法分别如下：</p>
+<h5 id="1-通过js进行初始化"><a href="#1-通过js进行初始化" class="headerlink" title="1. 通过js进行初始化"></a>1. 通过js进行初始化</h5><pre><code>var pager = new Pager({
+    data: {
+        current: &apos;1&apos;
+    }
+})
+pager.$on(&apos;nav&apos;, someCallback)
+</code></pre><h5 id="2-直接在模板中进行初始化"><a href="#2-直接在模板中进行初始化" class="headerlink" title="2. 直接在模板中进行初始化"></a>2. 直接在模板中进行初始化</h5><pre><code>&lt;pager current=1 on-nav={someCallback($event)} /&gt;
+</code></pre><p>在模板中的初始化实际上使用了options里的name属性，可以使用<code>Component.component</code>自定义，这种方法即所谓的内嵌组件。</p>
+<h4 id="内嵌组件"><a href="#内嵌组件" class="headerlink" title="内嵌组件"></a>内嵌组件</h4><p>内嵌组件通常会传入一些属性，这些属性会成为data的成员，如</p>
+<pre><code>&lt;pager total=100 current={1} show={show} &gt;&lt;/pager&gt;
+</code></pre><p>则data.tatal = ‘100’, data.current = 1 &amp; pager.data.show = this.data.show (this =&gt; 模板所在组件)。若属性没有值则默认为true，属性名若有连字符则转为驼峰式，如</p>
+<pre><code>&lt;pager show-modal={true} isHide={hide}/&gt;
+</code></pre><p>使用data.showModal访问show-modal属性。on-[eventName]自动转换为组件事件绑定：</p>
+<pre><code>&lt;pager on-nav={this.nav($event)}&gt;&lt;/pager&gt;
+</code></pre><p>相当于<code>pager.$on(&#39;nav&#39;, this.nav.bind(this))</code>。还有两个特殊属性ref &amp; isolate，到时候再说。</p>
+<h2 id="四-事件"><a href="#四-事件" class="headerlink" title="四. 事件"></a>四. 事件</h2><p>在Regular中，事件分为两类</p>
+<ul>
+<li>DOM事件</li>
+<li>组件事件</li>
+</ul>
+<h4 id="DOM事件"><a href="#DOM事件" class="headerlink" title="DOM事件"></a>DOM事件</h4><p>节点上的以on-开头的属性均会被作为DOM事件处理，如<code>on-click={Expression}</code>。regular在这一部分的实现原理为：如果遇到on-xx属性，首先检查是否注册自定义事件，若无，则使用addEventListener来绑定事件，所以js所有原生事件都可以得到很好的支持。自定义DOM事件（如判断键盘某个键被按下）的方法如下：</p>
+<pre><code>Component.event(event, fn)
+</code></pre><p>event为自定义事件名称，fn为对应执行的函数，包含两个参数<code>fn(elem, fire)</code></p>
+<ul>
+<li>elem: 绑定节点</li>
+<li>fire：触发器</li>
+</ul>
+<p>直接看DEMO：</p>
+<pre><code>var dom = Regular.dom;
+
+Regular.event(&apos;enter&apos;, function(elem, fire){
+  function update(ev){
+    if(ev.which == 13){ // ENTER key
+      ev.preventDefault();
+      fire(ev); // if key is enter , we fire the event;
+    }
+  }
+  dom.on(elem, &quot;keypress&quot;, update);
+  return function destroy(){ // return a destroy function
+    dom.off(elem, &quot;keypress&quot;, update);
+  }
+});
+
+// use in template
+&lt;textarea on-enter={this.submit($event)}&gt;&lt;/textarea&gt;`
+</code></pre><p>事件绑定可以用on-，同时也可以使用事件代理的方法，即使用delegate-代替on-，一般用于大型列表</p>
+<pre><code>&lt;div delegate-click=&quot;remove&quot;&gt;Delte&lt;/div&gt;   //Proxy way via delegate
+&lt;div delegate-click={this.remove()}&gt;Delte&lt;/div&gt; // Evaluated way via delagate
+</code></pre><p>事件触发时会有一个特殊的$event变量存储在data中，可以在模板中直接使用它，如：</p>
+<pre><code>new Regular({
+  template:
+  &quot;&lt;button on-click={this.add(1, $event)}&gt; count+1 &lt;/button&gt; \
+    &lt;b&gt;{count}&lt;/b&gt;&quot;,
+  data: {count:1},
+  add: function(count, $event){
+    this.data.count += count;
+    alert($event.pageX)
+  }
+}).$inject(document.body);
+</code></pre><p>$event对象是经过修正的，在兼容IE6前提之下可以提供使用的属性有：</p>
+<ul>
+<li>origin: 绑定节点</li>
+<li>target: 触发节点</li>
+<li>preventDefault(): 阻止默认事件</li>
+<li>stopPropagation(): 阻止事件冒泡</li>
+<li>which</li>
+<li>pageX</li>
+<li>pageY</li>
+<li>wheelDelta</li>
+<li>event: 原始事件对象</li>
+</ul>
+<h4 id="组件事件"><a href="#组件事件" class="headerlink" title="组件事件"></a>组件事件</h4><p>什么叫组件事件呢？举个例子就明白了：组件的生命周期。Regular集成了Emmiter，所有组件可以使用以下接口实现事件驱动的开发：</p>
+<ul>
+<li>component.$on: 用于添加事件监听器</li>
+<li>component.$off: 用于解绑事件监听器</li>
+<li>component.$emit: 用于触发某个事件</li>
+</ul>
+<p>组件的事件绑定与DOM事件绑定很类似，只是一个是作用于组件一个作用于DOM而已，如：</p>
+<pre><code>//???
+&lt;div&gt;
+    &lt;pager on-nav={ this.refresh($event) }&gt;&lt;/pager&gt;
+&lt;/div&gt;
+</code></pre><p>组件的生命周期分三个阶段：</p>
+<ol>
+<li>$config: 会在compile之前触发，你可以在此时预处理组件数据</li>
+<li>$init : 会在compile之后触发，此时，dom结构已经生成，你可以通过ref来获取了</li>
+<li>$destroy: 会在组件被destroy时，触发</li>
+</ol>
+<p>无论是DOM事件还是组件事件，处理事件的方法都是一致的，有两种方法：</p>
+<ul>
+<li>使用表达式（推荐）</li>
+</ul>
+<p>使用表达式则事件触发后表达式会被运行一次</p>
+<pre><code>&lt;div on-click={this.remove(index)}&gt;Delte&lt;/div&gt;
+</code></pre><p>remove被定义在组件当中</p>
+<pre><code>var Component = Regular.extend({
+  template:&apos;example&apos;,
+  remove: function(index){
+    this.data.list.splice(index ,1);
+    // other logic
+  }
+})
+</code></pre><ul>
+<li>非表达式（函数名）</li>
+</ul>
+<p>传入的不是表达式时，事件会被代理至组件的事件系统当中，使用$on来处理对应的事件</p>
+<pre><code>&lt;div on-click=&quot;remove&quot;&gt;Delte&lt;/div&gt;
+
+var Component = Regular.extend({
+ template:&apos;example&apos;,
+ init: function(){
+   this.$on(&quot;remove&quot;, function($event){
+       // your logic here
+   })
+ }
+})
+</code></pre><h2 id="五-过滤器与计算属性"><a href="#五-过滤器与计算属性" class="headerlink" title="五. 过滤器与计算属性"></a>五. 过滤器与计算属性</h2><h4 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h4><p>与Python中的过滤器类似如：</p>
+<pre><code>&lt;p&gt;{ [1,2,3] | join: &quot;+&quot; } = 6&lt;/p&gt;
+//过滤器结果为&quot;1+2+3&quot;
+</code></pre><p>过滤器一部分是预设的，自定义过滤器的方法如下：</p>
+<pre><code>Component.filter(name, factory)
+</code></pre><p>其中factory为函数对象，有get和set两个方法，直接传函数的话转换为factory.get。双向过滤器以后再看。</p>
+<h4 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h4><p>计算属性与vue的计算属性几乎完全一致。传入的计算属性可以是三种类型的：</p>
+<ol>
+<li>包含get/set的对象</li>
+<li>直接传入函数作为getter</li>
+<li>传入字符串表达式作为Expression对象</li>
+</ol>
+<p>一个一个看吧。首先是对象类型的计算属性：</p>
+<pre><code>var component = regular.extend({
+  computed: {
+    fullname: {
+      //传入data属性，返回处理后的属性fullname
+      get: function(data){
+        return data.first + &quot;-&quot; + data.last;
+      },
+      //fullname设置器，传入希望的值及data属性，设置data.first、data.last从而get到fullname为对应值
+      set: function(value, data){
+        var tmp = value.split(&quot;-&quot;);
+        data.first = tmp[0];
+        data.last = tmp[1];
+      }
+    }
+  }
+})
+</code></pre><p>然后是函数类型的计算属性，函数直接被作为getter函数存在，没有setter：</p>
+<pre><code>var component = regular.extend({
+  computed: {
+    fullname: function(data){
+        return data.first + &quot;-&quot; + data.last;
+    }
+  }
+})
+</code></pre><p>最后是字符串表达式，直接被处理为Expression对象</p>
+<pre><code>var component = regular.extend({
+  computed: {
+    fullname: &quot;first+ &apos;-&apos; + last&quot;
+  }
+})
+</code></pre><h2 id="贴几个自己跟着写的小DEMO"><a href="#贴几个自己跟着写的小DEMO" class="headerlink" title="贴几个自己跟着写的小DEMO"></a>贴几个自己跟着写的小DEMO</h2><p>可以自己添加item的NoteList</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;regular.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    var Note = Regular.extend({
+        template:
+        &quot;&lt;input type=&apos;text&apos; r-model={draft}&gt;&quot;+
+        &quot;&lt;button on-click={this.post()}&gt; post &lt;/button&gt;&quot;,
+        post: function(){
+            var _data = this.data;
+            this.$emit(&apos;post&apos;, _data.draft);
+            //post事件触发时draft作为参数$event，用到了组件事件知识点
+            _data.draft = &apos;&apos;;
+        },
+        data: {
+            draft: &apos;&apos;
+        },
+        name: &apos;note&apos;
+    });
+    var Notelist = Regular.extend({
+        template:
+        //note组件的post事件触发时执行后面的表达式
+        &quot;&lt;note on-post={ items.push({ content: $event }) } /&gt;&quot;+
+        &quot;&lt;ol&gt;{#list items as item}&quot;+
+        &quot;&lt;li class={item.done?&apos;done&apos;:&apos;&apos;} on-click={item.done = !item.done}&gt;{ item.content }&lt;/li&gt;&quot;+
+        &quot;{/list}&lt;/ol&gt;&quot;
+    });
+    var notelist = new Notelist({
+        data: {
+            items: [
+                {content: &apos;game&apos;},
+                {content: &apos;homewok&apos;}
+            ]
+        }
+    }).$inject(&apos;#app&apos;);
+&lt;/script&gt;
+</code></pre><hr>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><ul>
+<li>数据绑定与脏检查</li>
+<li>基于类的数据绑定（klass，supr）</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://ensorrow.github.io/2016/08/01/Regular学习笔记-一/" data-id="civrri8gm0008rp8wywx7la30" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://ensorrow.github.io/2016/08/01/Regular学习笔记-一/#comments" class="article-comment-link ds-thread-count" data-thread-key="http://ensorrow.github.io/2016/08/01/Regular学习笔记-一/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/08/01/Regular-js学习笔记-二/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Regular学习笔记(二)
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/05/23/使用express处理get与post请求/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">使用express处理get与post请求</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div class="ds-thread" data-thread-key="2016/08/01/Regular学习笔记-一/" data-title="Regular学习笔记(一)" data-url="http://ensorrow.github.io/2016/08/01/Regular学习笔记-一/"></div>
+    <style>
+        #ds-thread #ds-reset .ds-textarea-wrapper {
+            background: none;
+        }
+        #ds-reset .ds-avatar img {
+            box-shadow: none;
+        }
+        #ds-reset .ds-gradient-bg {
+            background: #f7f7f7;
+        }
+        #ds-thread #ds-reset li.ds-tab a {
+            border-radius: 3px;
+        }
+        #ds-thread #ds-reset .ds-post-button {
+            color: white;
+            border: none;
+            box-shadow: none;
+            background: #d32;
+            text-shadow: none;
+            font-weight: normal;
+            font-family: 'Microsoft Yahei';
+        }
+        #ds-thread #ds-reset .ds-post-button:hover {
+            color: white;
+            background: #DE594C;
+        }
+        #ds-thread #ds-reset .ds-post-button:active {
+            background: #d32;
+        }
+        #ds-smilies-tooltip ul.ds-smilies-tabs li a.ds-current {
+            color: white;
+            background: #d32;
+            box-shadow: none;
+            text-shadow: none;
+            font-weight: normal;
+        }
+    </style>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/07/微信小程序初探/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/07/微信小程序初探/" class="title">微信小程序初探</a></p>
+                            <p class="item-date"><time datetime="2016-11-07T07:48:16.000Z" itemprop="datePublished">2016-11-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/05/Angular学习笔记（一）/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/05/Angular学习笔记（一）/" class="title">Angular学习笔记（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-05T08:45:07.000Z" itemprop="datePublished">2016-11-05</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/19/前端入门-HTML-CSS基础/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/09/19/前端入门-HTML-CSS基础/" class="title">前端入门-HTML+CSS基础</a></p>
+                            <p class="item-date"><time datetime="2016-09-19T05:08:07.000Z" itemprop="datePublished">2016-09-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/06/ES6学习笔记/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/06/ES6学习笔记/" class="title">ES6学习笔记</a></p>
+                            <p class="item-date"><time datetime="2016-08-06T07:47:20.000Z" itemprop="datePublished">2016-08-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/08/05/正则表达式从入门到放弃/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/08/05/正则表达式从入门到放弃/" class="title">正则表达式从入门到放弃</a></p>
+                            <p class="item-date"><time datetime="2016-08-05T10:48:23.000Z" itemprop="datePublished">2016-08-05</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">二月 2016</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ajax/">Ajax</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Angular/">Angular</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSS/">CSS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/">ES6</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EUX/">EUX</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Express/">Express</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML/">HTML</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NETEASE/">NETEASE</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OS-X/">OS-X</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Native/">React Native</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redux/">Redux</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Regular/">Regular</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eeyes/">eeyes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jQuery/">jQuery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jquery/">jquery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/js/">js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wechat/">wechat</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端/">前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端性能/">前端性能</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则/">正则</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/黑苹果/">黑苹果</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Ajax/" style="font-size: 10px;">Ajax</a> <a href="/tags/Angular/" style="font-size: 10px;">Angular</a> <a href="/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/EUX/" style="font-size: 20px;">EUX</a> <a href="/tags/Express/" style="font-size: 10px;">Express</a> <a href="/tags/HTML/" style="font-size: 10px;">HTML</a> <a href="/tags/NETEASE/" style="font-size: 15px;">NETEASE</a> <a href="/tags/Node/" style="font-size: 10px;">Node</a> <a href="/tags/OS-X/" style="font-size: 10px;">OS-X</a> <a href="/tags/React-Native/" style="font-size: 15px;">React Native</a> <a href="/tags/Redux/" style="font-size: 15px;">Redux</a> <a href="/tags/Regular/" style="font-size: 15px;">Regular</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/eeyes/" style="font-size: 10px;">eeyes</a> <a href="/tags/jQuery/" style="font-size: 10px;">jQuery</a> <a href="/tags/jquery/" style="font-size: 10px;">jquery</a> <a href="/tags/js/" style="font-size: 10px;">js</a> <a href="/tags/wechat/" style="font-size: 10px;">wechat</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/前端性能/" style="font-size: 10px;">前端性能</a> <a href="/tags/正则/" style="font-size: 10px;">正则</a> <a href="/tags/黑苹果/" style="font-size: 10px;">黑苹果</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://www.eeyes.net">e瞳网</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2016 吕哲扬<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'ensorrow'};
+    (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
