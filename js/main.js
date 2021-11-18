@@ -34,6 +34,7 @@
     // Profile card
     $(document).on('click', function () {
         $('#profile').removeClass('card');
+        console.log('test pr navigation')
     }).on('click', '#profile-anchor', function (e) {
         e.stopPropagation();
         $('#profile').toggleClass('card');
