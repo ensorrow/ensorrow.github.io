@@ -35,6 +35,7 @@
     $(document).on('click', function () {
         $('#profile').removeClass('card');
         console.warn('test same line outdated ');
+        console.log('commit aa')
     }).on('click', '#profile-anchor', function (e) {
         e.stopPropagation();
         $('#profile').toggleClass('card');
