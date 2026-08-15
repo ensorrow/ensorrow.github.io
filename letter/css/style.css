@@ -302,15 +302,22 @@ button { font: inherit; }
   object-fit: contain;
 }
 
-.scene__poster { z-index: 0; }
-
-.scene__video {
+.scene__poster {
   z-index: 1;
-  opacity: 0;
   transition: opacity 420ms ease;
 }
 
-.scene__video.is-playing { opacity: 1; }
+/* Keep the video fully opaque. iOS Safari will not decode a video at opacity: 0,
+   which left the page stuck on the poster image. */
+.scene__video {
+  z-index: 0;
+  opacity: 1;
+}
+
+.scene__media.is-playing .scene__poster {
+  opacity: 0;
+  pointer-events: none;
+}
 
 .stage-shade {
   position: absolute;
