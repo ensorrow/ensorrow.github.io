@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#17120f">
+  <meta name="description" content="写给三十岁的你，一封关于我们、理解、成长与往后日子的信。">
+  <title>写给三十岁的你</title>
+  <link rel="preload" href="assets/images/01-where-we-began.jpg" as="image" fetchpriority="high">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <div class="corner-mark" aria-hidden="true">给你</div>
+
+  <div class="audio-control" id="audio-control">
+    <button class="audio-button" id="audio-toggle" type="button" aria-label="播放背景音乐" aria-pressed="false">
+      <svg class="audio-icon audio-icon--off" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9v6h4l5 4V5L8 9H4Zm12.2 1.15 3.65 3.65m0-3.65-3.65 3.65"/>
+      </svg>
+      <svg class="audio-icon audio-icon--on" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 9v6h4l5 4V5L8 9H4Zm12.5-.5a5 5 0 0 1 0 7M18.8 6.2a8 8 0 0 1 0 11.6"/>
+      </svg>
+    </button>
+    <span class="audio-label" id="audio-label" aria-live="polite">音乐未开启</span>
+  </div>
+
+  <audio id="bg-music" loop preload="none">
+    <source src="assets/audio/heartwarming.mp3" type="audio/mpeg">
+  </audio>
+
+  <header class="hero" id="hero">
+    <img class="hero__poster" src="assets/images/01-where-we-began.jpg" alt="" aria-hidden="true">
+    <div class="hero__veil" aria-hidden="true"></div>
+    <div class="hero__inner">
+      <span class="hero__seal" aria-hidden="true">三十</span>
+      <p class="hero__eyebrow">一封写给你的信</p>
+      <h1>写给<br>三十岁的你</h1>
+      <p class="hero__subtitle">关于我们从哪里来，也关于往后要一起去哪里。</p>
+      <button class="enter-button" id="enter-button" type="button">
+        <span>开启音乐，开始阅读</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+      </button>
+      <p class="hero__hint">建议打开声音 · 向下滑动</p>
+    </div>
+  </header>
+
+  <main class="scrolly" id="scrolly">
+    <div class="scrolly__stage" id="scrolly-stage" aria-hidden="true">
+      <div class="scene-layer" data-scene="0">
+        <div class="scene__media">
+          <img class="scene__poster" src="assets/images/01-where-we-began.jpg" alt="">
+          <video class="scene__video" muted playsinline loop preload="metadata" poster="assets/images/01-where-we-began.jpg">
+            <source src="assets/video/01-where-we-began.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="scene-layer" data-scene="1">
+        <div class="scene__media">
+          <img class="scene__poster" src="assets/images/02-understanding-you.jpg" alt="" loading="lazy">
+          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/02-understanding-you.jpg">
+            <source src="assets/video/02-understanding-you.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="scene-layer" data-scene="2">
+        <div class="scene__media">
+          <img class="scene__poster" src="assets/images/03-becoming-yourself.jpg" alt="" loading="lazy">
+          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/03-becoming-yourself.jpg">
+            <source src="assets/video/03-becoming-yourself.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="scene-layer" data-scene="3">
+        <div class="scene__media">
+          <img class="scene__poster" src="assets/images/04-family-of-three.jpg" alt="" loading="lazy">
+          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/04-family-of-three.jpg">
+            <source src="assets/video/04-family-of-three.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="scene-layer" data-scene="4">
+        <div class="scene__media">
+          <img class="scene__poster" src="assets/images/05-white-hair.jpg" alt="" loading="lazy">
+          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/05-white-hair.jpg">
+            <source src="assets/video/05-white-hair.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="scene-layer" data-scene="5">
+        <div class="scene__media">
+          <img class="scene__poster" src="assets/images/06-days-ahead.jpg" alt="" loading="lazy">
+          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/06-days-ahead.jpg">
+            <source src="assets/video/06-days-ahead.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="stage-shade" aria-hidden="true"></div>
+      <div class="scene-counter"><span id="scene-current">01</span><i></i><span>06</span></div>
+    </div>
+
+    <div class="scrolly__content">
+      <section class="step step--right" data-step="0">
+        <div class="step__card">
+          <p class="step__chapter">第一章</p>
+          <h2>我们从哪里来</h2>
+          <p class="step__quote">那时候我们都还很年轻，<br>也刚刚开始学着一起生活。</p>
+        </div>
+      </section>
+
+      <section class="step step--left" data-step="1">
+        <div class="step__card">
+          <p class="step__chapter">第二章</p>
+          <h2>我开始真正懂你</h2>
+          <p class="step__quote">有些感受我不能替你承受，<br>但我想慢慢学会理解。</p>
+        </div>
+      </section>
+
+      <section class="step step--right" data-step="2">
+        <div class="step__card">
+          <p class="step__chapter">第三章</p>
+          <h2>你正在成为谁</h2>
+          <p class="step__quote">你没有变成另一个人，<br>只是越来越像真正的自己。</p>
+        </div>
+      </section>
+
+      <section class="step step--left" data-step="3">
+        <div class="step__card">
+          <p class="step__chapter">第四章</p>
+          <h2>我们成为了一家三口</h2>
+          <p class="step__quote">我们还是我们，<br>只是生活里多了一个牵挂。</p>
+        </div>
+      </section>
+
+      <section class="step step--right" data-step="4">
+        <div class="step__card step__card--quiet">
+          <p class="step__chapter">第四章 · 间奏</p>
+          <h2>白头发</h2>
+          <p class="step__quote">不要你变老，<br>也不要你辛苦。</p>
+        </div>
+      </section>
+
+      <section class="step step--left" data-step="5">
+        <div class="step__card">
+          <p class="step__chapter">第五章</p>
+          <h2>往后的日子</h2>
+          <p class="step__quote">我们已经很会努力了。<br>接下来，也该学着享受幸福。</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="outro" id="outro">
+    <div class="outro__glow" aria-hidden="true"></div>
+    <div class="outro__inner">
+      <p class="outro__eyebrow">To be continued</p>
+      <h2>三十岁，生日快乐。</h2>
+      <p>很幸运，往后的日子，我们还会一起慢慢走。</p>
+      <a href="#song">最后，还有一首歌想送给你 <span aria-hidden="true">↓</span></a>
+    </div>
+  </footer>
+
+  <section class="song-page" id="song" aria-labelledby="song-title">
+    <img class="song-page__backdrop" src="assets/images/days-ahead-suno-cover.jpg" alt="" aria-hidden="true" loading="lazy">
+    <div class="song-page__veil" aria-hidden="true"></div>
+    <div class="song-page__inner">
+      <div class="song-cover-wrap">
+        <img class="song-cover" src="assets/images/days-ahead-suno-cover.jpg" alt="《往后的日子》歌曲封面" loading="lazy">
+        <span class="song-cover__mark" aria-hidden="true">FOR YOU</span>
+      </div>
+
+      <div class="song-copy">
+        <p class="song-copy__eyebrow">A song for you</p>
+        <h2 id="song-title">往后的日子</h2>
+        <p class="song-copy__artist">ENSORROW · SUNO</p>
+        <p class="song-copy__note">把这一首留到最后。<br>它唱的是我们，也是还没有写完的以后。</p>
+
+        <div class="song-player">
+          <button class="song-play" id="song-play" type="button" aria-label="播放《往后的日子》" aria-pressed="false">
+            <svg class="song-play__icon song-play__icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z"/></svg>
+            <svg class="song-play__icon song-play__icon--pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7v10M16 7v10"/></svg>
+          </button>
+          <div class="song-player__timeline">
+            <input id="song-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="《往后的日子》播放进度">
+            <div class="song-player__times" aria-live="off">
+              <span id="song-current">00:00</span>
+              <span id="song-duration">05:34</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="song-status" id="song-status" aria-live="polite">点击播放，完整听完这封信</p>
+        <a class="song-back" href="#hero">从头再看一遍 <span aria-hidden="true">↑</span></a>
+      </div>
+    </div>
+
+    <audio id="letter-song" preload="metadata">
+      <source src="assets/audio/days-ahead-suno.mp3" type="audio/mpeg">
+    </audio>
+  </section>
+
+  <noscript>
+    <p class="noscript">请开启 JavaScript，以观看完整的滚动叙事。</p>
+  </noscript>
+
+  <script src="js/scrollama.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
