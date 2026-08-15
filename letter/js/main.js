@@ -156,6 +156,17 @@
   });
 
   enterButton.addEventListener("click", function () {
+    // Unlock video playback on iOS: play then immediately pause each scene video
+    // under a real user gesture so that subsequent programmatic play() calls work.
+    videos.forEach(function (video) {
+      if (!video) return;
+      video.muted = true;
+      video.playsInline = true;
+      var p = video.play();
+      if (p && typeof p.then === "function") {
+        p.then(function () { video.pause(); }).catch(function () {});
+      }
+    });
     playAudio();
     scrolly.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   });
