@@ -12,8 +12,13 @@
   var progressBar = document.getElementById("progress-bar");
   var videoRetry = document.getElementById("video-retry");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  if (isIOS) document.documentElement.style.scrollBehavior = "auto";
   var activeIndex = 0;
   var storyIsVisible = false;
+  var hasEntered = false;
+  var retryTimer = 0;
 
   function setVideoRetryVisible(visible) {
     videoRetry.hidden = !visible;
@@ -23,26 +28,79 @@
     return video === videos[activeIndex];
   }
 
-  function setVideoState(video, shouldPlay, restart) {
-    if (!video) return Promise.resolve(false);
-
-    if (!shouldPlay || reduceMotion || document.hidden) {
-      video.pause();
-      video.classList.remove("is-playing");
-      if (isActiveVideo(video)) setVideoRetryVisible(false);
-      return Promise.resolve(false);
-    }
-
-    // Set both the DOM attributes and media properties before every play attempt.
-    // Older WebKit versions inspect these flags at play() time.
+  function prepareVideoElement(video) {
+    if (!video) return;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
+  }
 
-    if (restart) {
+  function canSwapSource(video) {
+    return Boolean(video) && video.paused && !video.classList.contains("is-playing") && video.readyState < 2;
+  }
+
+  function applyVideoSrc(video, url) {
+    if (!video || !url || video.getAttribute("src") === url) return;
+    video.setAttribute("src", url);
+    video.src = url;
+    try { video.load(); } catch (error) { /* Older WebKit may throw if the element is not ready. */ }
+  }
+
+  function scheduleRetryButton(video) {
+    window.clearTimeout(retryTimer);
+    retryTimer = window.setTimeout(function () {
+      if (isActiveVideo(video) && storyIsVisible && !video.classList.contains("is-playing")) {
+        setVideoRetryVisible(true);
+      }
+    }, 1800);
+  }
+
+  function fallbackVideoSrc(video) {
+    var tried = video.getAttribute("data-tried-src") || "";
+    var current = video.currentSrc || video.getAttribute("src") || "";
+    var directUrl = video.getAttribute("data-direct-src");
+    var localUrl = video.getAttribute("data-local-src");
+    var nextUrl = null;
+    if (directUrl && tried.indexOf(directUrl) === -1 && current.indexOf(directUrl) === -1) nextUrl = directUrl;
+    else if (localUrl && tried.indexOf(localUrl) === -1 && current.indexOf(localUrl) === -1) nextUrl = localUrl;
+    if (!nextUrl) return false;
+    video.setAttribute("data-tried-src", (tried + " " + current + " " + nextUrl).trim());
+    applyVideoSrc(video, nextUrl);
+    return true;
+  }
+
+  function resolveCdnSrc(video) {
+    var cdnUrl = video.getAttribute("data-cdn-src");
+    if (!cdnUrl || reduceMotion) return;
+    fetch(cdnUrl, {
+      method: "HEAD",
+      mode: "cors",
+      redirect: "follow"
+    }).then(function (response) {
+      if (response.status !== 200 && response.status !== 206) return;
+      var finalUrl = response.url;
+      if (!finalUrl || finalUrl === cdnUrl) return;
+      video.setAttribute("data-direct-src", finalUrl);
+      if (canSwapSource(video)) applyVideoSrc(video, finalUrl);
+    }).catch(function () { /* Keep the same-origin file if the CDN redirect cannot be resolved. */ });
+  }
+
+  function setVideoState(video, shouldPlay, restart) {
+    if (!video) return Promise.resolve(false);
+
+    if (!shouldPlay || reduceMotion || document.hidden) {
+      video.pause();
+      if (!isActiveVideo(video) || !storyIsVisible) video.classList.remove("is-playing");
+      if (isActiveVideo(video) && !storyIsVisible) setVideoRetryVisible(false);
+      return Promise.resolve(false);
+    }
+
+    prepareVideoElement(video);
+
+    if (restart && video.readyState >= 1) {
       try { video.currentTime = 0; } catch (error) { /* Metadata may not be ready yet. */ }
     }
 
@@ -56,17 +114,15 @@
     }
 
     if (promise && typeof promise.then === "function") {
-      window.setTimeout(function () {
-        if (isActiveVideo(video) && storyIsVisible && !video.classList.contains("is-playing")) {
-          setVideoRetryVisible(true);
-        }
-      }, 2500);
-
+      scheduleRetryButton(video);
       return promise.then(function () {
         if (!video.paused) video.classList.add("is-playing");
         if (isActiveVideo(video)) setVideoRetryVisible(false);
         return !video.paused;
-      }).catch(function () {
+      }).catch(function (error) {
+        if ((!error || error.name !== "NotAllowedError") && fallbackVideoSrc(video)) {
+          return setVideoState(video, true, false);
+        }
         video.classList.remove("is-playing");
         if (isActiveVideo(video) && storyIsVisible) setVideoRetryVisible(true);
         return false;
@@ -101,15 +157,21 @@
 
   videos.forEach(function (video) {
     if (!video) return;
-    video.defaultMuted = true;
+    prepareVideoElement(video);
+    video.setAttribute("data-local-src", video.getAttribute("src") || "");
+    resolveCdnSrc(video);
     video.addEventListener("playing", function () {
       video.classList.add("is-playing");
       if (isActiveVideo(video)) setVideoRetryVisible(false);
     });
     video.addEventListener("pause", function () {
-      video.classList.remove("is-playing");
+      if (!isActiveVideo(video) || !storyIsVisible) video.classList.remove("is-playing");
     });
     video.addEventListener("error", function () {
+      if (fallbackVideoSrc(video)) {
+        if (isActiveVideo(video) && storyIsVisible) setVideoState(video, true, false);
+        return;
+      }
       if (isActiveVideo(video) && storyIsVisible && !reduceMotion) setVideoRetryVisible(true);
     });
   });
@@ -124,6 +186,7 @@
   if ("IntersectionObserver" in window) {
     var storyObserver = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
+        if (!hasEntered) return;
         storyIsVisible = entry.isIntersecting;
         setVideoState(videos[activeIndex], storyIsVisible, false);
       });
@@ -135,9 +198,8 @@
         if (!entry.isIntersecting) return;
         var index = Number(entry.target.getAttribute("data-step"));
         var video = videos[index];
-        if (video && video.preload !== "auto") {
+        if (video && video.preload !== "auto" && !isActiveVideo(video)) {
           video.preload = "auto";
-          video.load();
         }
         observer.unobserve(entry.target);
       });
@@ -221,15 +283,20 @@
   });
 
   enterButton.addEventListener("click", function () {
-    // Start the visible scene in the user gesture, but never block navigation on
-    // downloading every remote video. Other scenes stay lazy-loaded and muted.
+    hasEntered = true;
+    storyIsVisible = true;
     var video = videos[activeIndex];
     if (video && !reduceMotion) {
       video.preload = "auto";
       setVideoState(video, true, false);
     }
     playAudio();
-    scrolly.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    window.requestAnimationFrame(function () {
+      scrolly.scrollIntoView({
+        behavior: (reduceMotion || isIOS) ? "auto" : "smooth",
+        block: "start"
+      });
+    });
   });
 
   backgroundAudio.addEventListener("pause", function () {
