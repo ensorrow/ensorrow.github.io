@@ -28,6 +28,17 @@
     return video === videos[activeIndex];
   }
 
+  function mediaWrap(video) {
+    return video && video.parentNode ? video.parentNode : null;
+  }
+
+  function setPlayingClass(video, playing) {
+    if (!video) return;
+    video.classList.toggle("is-playing", playing);
+    var media = mediaWrap(video);
+    if (media) media.classList.toggle("is-playing", playing);
+  }
+
   function prepareVideoElement(video) {
     if (!video) return;
     video.muted = true;
@@ -93,7 +104,7 @@
 
     if (!shouldPlay || reduceMotion || document.hidden) {
       video.pause();
-      if (!isActiveVideo(video) || !storyIsVisible) video.classList.remove("is-playing");
+      if (!isActiveVideo(video) || !storyIsVisible) setPlayingClass(video, false);
       if (isActiveVideo(video) && !storyIsVisible) setVideoRetryVisible(false);
       return Promise.resolve(false);
     }
@@ -108,7 +119,7 @@
     try {
       promise = video.play();
     } catch (error) {
-      video.classList.remove("is-playing");
+      setPlayingClass(video, false);
       if (isActiveVideo(video) && storyIsVisible) setVideoRetryVisible(true);
       return Promise.resolve(false);
     }
@@ -116,21 +127,21 @@
     if (promise && typeof promise.then === "function") {
       scheduleRetryButton(video);
       return promise.then(function () {
-        if (!video.paused) video.classList.add("is-playing");
+        if (!video.paused) setPlayingClass(video, true);
         if (isActiveVideo(video)) setVideoRetryVisible(false);
         return !video.paused;
       }).catch(function (error) {
         if ((!error || error.name !== "NotAllowedError") && fallbackVideoSrc(video)) {
           return setVideoState(video, true, false);
         }
-        video.classList.remove("is-playing");
+        setPlayingClass(video, false);
         if (isActiveVideo(video) && storyIsVisible) setVideoRetryVisible(true);
         return false;
       });
     }
 
     var isPlaying = !video.paused;
-    video.classList.toggle("is-playing", isPlaying);
+    setPlayingClass(video, isPlaying);
     if (isActiveVideo(video)) setVideoRetryVisible(!isPlaying && storyIsVisible);
     return Promise.resolve(isPlaying);
   }
@@ -159,13 +170,13 @@
     if (!video) return;
     prepareVideoElement(video);
     video.setAttribute("data-local-src", video.getAttribute("src") || "");
-    resolveCdnSrc(video);
+    if (!isIOS) resolveCdnSrc(video);
     video.addEventListener("playing", function () {
-      video.classList.add("is-playing");
+      setPlayingClass(video, true);
       if (isActiveVideo(video)) setVideoRetryVisible(false);
     });
     video.addEventListener("pause", function () {
-      if (!isActiveVideo(video) || !storyIsVisible) video.classList.remove("is-playing");
+      if (!isActiveVideo(video) || !storyIsVisible) setPlayingClass(video, false);
     });
     video.addEventListener("error", function () {
       if (fallbackVideoSrc(video)) {
