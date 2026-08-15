@@ -158,17 +158,21 @@
   enterButton.addEventListener("click", function () {
     // Unlock video playback on iOS: play then immediately pause each scene video
     // under a real user gesture so that subsequent programmatic play() calls work.
-    videos.forEach(function (video) {
-      if (!video) return;
+    // Wait for the unlock handshake before scrolling so iOS keeps the gesture
+    // context alive for every video (not just the first one).
+    var unlocks = videos.map(function (video) {
+      if (!video) return Promise.resolve();
       video.muted = true;
       video.playsInline = true;
       var p = video.play();
-      if (p && typeof p.then === "function") {
-        p.then(function () { video.pause(); }).catch(function () {});
-      }
+      if (!p || typeof p.then !== "function") return Promise.resolve();
+      return p.then(function () { video.pause(); }).catch(function () {});
     });
+
     playAudio();
-    scrolly.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    Promise.all(unlocks).finally(function () {
+      scrolly.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    });
   });
 
   backgroundAudio.addEventListener("pause", function () {
