@@ -12,7 +12,8 @@
   var progressBar = document.getElementById("progress-bar");
   var videoRetry = document.getElementById("video-retry");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var isIOS = /iP(hone|od|ad)/.test(navigator.userAgent) ||
+  var isIPhone = /iPhone|iPod/.test(navigator.userAgent);
+  var isIOS = isIPhone || /iPad/.test(navigator.userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   if (isIOS) document.documentElement.style.scrollBehavior = "auto";
   var activeIndex = 0;
@@ -293,22 +294,31 @@
     }
   });
 
-  enterButton.addEventListener("click", function () {
+  function startLetter() {
+    if (hasEntered) return;
     hasEntered = true;
     storyIsVisible = true;
     var video = videos[activeIndex];
     if (video && !reduceMotion) {
       video.preload = "auto";
+      prepareVideoElement(video);
       setVideoState(video, true, false);
     }
     playAudio();
-    window.requestAnimationFrame(function () {
+    // iPhone Safari cancels inline video if the page scrolls in the same turn.
+    // iPad is closer to desktop and usually keeps playing, which matches what you saw.
+    window.setTimeout(function () {
       scrolly.scrollIntoView({
-        behavior: (reduceMotion || isIOS) ? "auto" : "smooth",
+        behavior: (reduceMotion || isIPhone) ? "auto" : "smooth",
         block: "start"
       });
-    });
-  });
+    }, isIPhone ? 160 : 0);
+  }
+
+  enterButton.addEventListener("click", startLetter);
+  if (isIPhone) {
+    enterButton.addEventListener("touchstart", startLetter, { passive: true });
+  }
 
   backgroundAudio.addEventListener("pause", function () {
     if (backgroundAudio.ended) return;
