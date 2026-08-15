@@ -47,11 +47,11 @@
   </header>
 
   <main class="scrolly" id="scrolly">
-    <div class="scrolly__stage" id="scrolly-stage" aria-hidden="true">
+    <div class="scrolly__stage" id="scrolly-stage">
       <div class="scene-layer" data-scene="0">
         <div class="scene__media">
           <img class="scene__poster" src="assets/images/01-where-we-began.jpg" alt="">
-          <video class="scene__video" muted playsinline loop preload="metadata" poster="assets/images/01-where-we-began.jpg">
+          <video class="scene__video" muted playsinline webkit-playsinline loop preload="metadata" poster="assets/images/01-where-we-began.jpg">
             <source src="assets/video/01-where-we-began.mp4" type="video/mp4">
           </video>
         </div>
@@ -59,7 +59,7 @@
       <div class="scene-layer" data-scene="1">
         <div class="scene__media">
           <img class="scene__poster" src="assets/images/02-understanding-you.jpg" alt="" loading="lazy">
-          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/02-understanding-you.jpg">
+          <video class="scene__video" muted playsinline webkit-playsinline loop preload="none" poster="assets/images/02-understanding-you.jpg">
             <source src="assets/video/02-understanding-you.mp4" type="video/mp4">
           </video>
         </div>
@@ -67,7 +67,7 @@
       <div class="scene-layer" data-scene="2">
         <div class="scene__media">
           <img class="scene__poster" src="assets/images/03-becoming-yourself.jpg" alt="" loading="lazy">
-          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/03-becoming-yourself.jpg">
+          <video class="scene__video" muted playsinline webkit-playsinline loop preload="none" poster="assets/images/03-becoming-yourself.jpg">
             <source src="assets/video/03-becoming-yourself.mp4" type="video/mp4">
           </video>
         </div>
@@ -75,7 +75,7 @@
       <div class="scene-layer" data-scene="3">
         <div class="scene__media">
           <img class="scene__poster" src="assets/images/04-family-of-three.jpg" alt="" loading="lazy">
-          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/04-family-of-three.jpg">
+          <video class="scene__video" muted playsinline webkit-playsinline loop preload="none" poster="assets/images/04-family-of-three.jpg">
             <source src="assets/video/04-family-of-three.mp4" type="video/mp4">
           </video>
         </div>
@@ -83,7 +83,7 @@
       <div class="scene-layer" data-scene="4">
         <div class="scene__media">
           <img class="scene__poster" src="assets/images/05-white-hair.jpg" alt="" loading="lazy">
-          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/05-white-hair.jpg">
+          <video class="scene__video" muted playsinline webkit-playsinline loop preload="none" poster="assets/images/05-white-hair.jpg">
             <source src="assets/video/05-white-hair.mp4" type="video/mp4">
           </video>
         </div>
@@ -91,13 +91,17 @@
       <div class="scene-layer" data-scene="5">
         <div class="scene__media">
           <img class="scene__poster" src="assets/images/06-days-ahead.jpg" alt="" loading="lazy">
-          <video class="scene__video" muted playsinline loop preload="none" poster="assets/images/06-days-ahead.jpg">
+          <video class="scene__video" muted playsinline webkit-playsinline loop preload="none" poster="assets/images/06-days-ahead.jpg">
             <source src="assets/video/06-days-ahead.mp4" type="video/mp4">
           </video>
         </div>
       </div>
 
       <div class="stage-shade" aria-hidden="true"></div>
+      <button class="video-retry" id="video-retry" type="button" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z"/></svg>
+        <span>轻触播放动态画面</span>
+      </button>
       <div class="scene-counter"><span id="scene-current">01</span><i></i><span>06</span></div>
     </div>
 
@@ -192,6 +196,61 @@
         </div>
 
         <p class="song-status" id="song-status" aria-live="polite">点击播放，完整听完这封信</p>
+
+        <details class="song-lyrics" open>
+          <summary>
+            <span>歌词</span>
+            <small>LYRICS</small>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </summary>
+          <div class="song-lyrics__viewport" tabindex="0" aria-label="《往后的日子》完整歌词">
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">主歌一</p>
+              <p>那间屋子很小<br>一面镜子靠着墙<br>你把床单慢慢铺平<br>我把那盏小灯点亮<br>暖黄的光落下来<br>照着行李和空荡的房<br>那时我们还不懂日子<br>却已经住进彼此的明天</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">预副歌</p>
+              <p>后来雨落在旧窗<br>你沉默着，我也不太懂<br>直到我的手覆上你的手<br>才听见安静里的风</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">副歌</p>
+              <p>我们已经很会努力了<br>往后的日子慢一点吧<br>不用总赶着成为谁<br>你原本的样子就很好啊<br>等阳光落在两杯茶上<br>等晚风吹过我们的家<br>我想陪你把平常的日子<br>一天天，慢慢过下去</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">主歌二</p>
+              <p>你把揉皱的纸推远<br>又在空白上重新落笔<br>你没有变成另一个人<br>只是越来越像你自己<br>门口多了一双小鞋<br>小宝的笑声住进清晨<br>我们还是从前的我们<br>只是多了牵挂的人</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">预副歌</p>
+              <p>有些路不用急着回答<br>有些花会按自己的时间开<br>你只管往喜欢的地方走<br>回头的时候，我一直都在</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">副歌</p>
+              <p>我们已经很会努力了<br>往后的日子慢一点吧<br>不用把幸福留给以后<br>此刻就值得好好收下<br>等阳光落在两杯茶上<br>等小小的手牵住我们俩<br>我想陪你把寻常的四季<br>一岁岁，慢慢过成家</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">桥段</p>
+              <p>你在我的头发里面<br>找到一根白色的光<br>一根一根轻轻地拔<br>忽然停住了手掌<br>你说不想让我变老<br>也不想让我太辛苦<br>我想说，其实并不辛苦<br>有你们的地方<br>就是回家的方向</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">最终副歌</p>
+              <p>我们已经很会努力了<br>往后的日子慢一点吧<br>不必等所有心愿实现<br>才允许自己觉得幸福啊<br>等阳光落在两杯茶上<br>等我们都添了白头发<br>我还想握着你的手<br>坐在午后的藤椅上</p>
+            </div>
+
+            <div class="song-lyrics__stanza">
+              <p class="song-lyrics__label">尾声</p>
+              <p>三十岁不是青春的远方<br>是我们终于学会停下<br>看看灯还亮着<br>茶也还温着<br>你就在我的身旁<br>欢迎来到你的三十岁</p>
+            </div>
+          </div>
+        </details>
+
         <a class="song-back" href="#hero">从头再看一遍 <span aria-hidden="true">↑</span></a>
       </div>
     </div>

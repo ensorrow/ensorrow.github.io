@@ -4,7 +4,7 @@
 
 ## 结构
 
-- `index.html`：六段画面与五章文字结构（第四章之后包含《白头发》间奏）
+- `index.html`：六段画面、五章文字结构与歌曲完整歌词（第四章之后包含《白头发》间奏）
 - `css/style.css`：桌面 / 手机竖屏布局、转场和无障碍降级
 - `js/main.js`：Scrollama 场景切换、视频生命周期、双音乐互斥播放与进度控制
 - `js/scrollama.min.js`：本地托管的 Scrollama 3.2.0

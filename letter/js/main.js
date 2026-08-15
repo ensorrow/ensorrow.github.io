@@ -10,37 +10,80 @@
   var scrolly = document.getElementById("scrolly");
   var currentLabel = document.getElementById("scene-current");
   var progressBar = document.getElementById("progress-bar");
+  var videoRetry = document.getElementById("video-retry");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var activeIndex = 0;
   var storyIsVisible = false;
 
+  function setVideoRetryVisible(visible) {
+    videoRetry.hidden = !visible;
+  }
+
+  function isActiveVideo(video) {
+    return video === videos[activeIndex];
+  }
+
   function setVideoState(video, shouldPlay, restart) {
-    if (!video) return;
+    if (!video) return Promise.resolve(false);
 
     if (!shouldPlay || reduceMotion || document.hidden) {
       video.pause();
       video.classList.remove("is-playing");
-      return;
+      if (isActiveVideo(video)) setVideoRetryVisible(false);
+      return Promise.resolve(false);
     }
+
+    // Set both the DOM attributes and media properties before every play attempt.
+    // Older WebKit versions inspect these flags at play() time.
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
 
     if (restart) {
       try { video.currentTime = 0; } catch (error) { /* Metadata may not be ready yet. */ }
     }
 
-    var promise = video.play();
+    var promise;
+    try {
+      promise = video.play();
+    } catch (error) {
+      video.classList.remove("is-playing");
+      if (isActiveVideo(video) && storyIsVisible) setVideoRetryVisible(true);
+      return Promise.resolve(false);
+    }
+
     if (promise && typeof promise.then === "function") {
-      promise.then(function () {
-        video.classList.add("is-playing");
+      window.setTimeout(function () {
+        if (isActiveVideo(video) && storyIsVisible && !video.classList.contains("is-playing")) {
+          setVideoRetryVisible(true);
+        }
+      }, 2500);
+
+      return promise.then(function () {
+        if (!video.paused) video.classList.add("is-playing");
+        if (isActiveVideo(video)) setVideoRetryVisible(false);
+        return !video.paused;
       }).catch(function () {
         video.classList.remove("is-playing");
+        if (isActiveVideo(video) && storyIsVisible) setVideoRetryVisible(true);
+        return false;
       });
     }
+
+    var isPlaying = !video.paused;
+    video.classList.toggle("is-playing", isPlaying);
+    if (isActiveVideo(video)) setVideoRetryVisible(!isPlaying && storyIsVisible);
+    return Promise.resolve(isPlaying);
   }
 
   function activateScene(index, restart) {
     if (index < 0 || index >= layers.length) return;
     var changed = index !== activeIndex;
     activeIndex = index;
+    setVideoRetryVisible(false);
 
     layers.forEach(function (layer, layerIndex) {
       layer.classList.toggle("is-active", layerIndex === index);
@@ -55,6 +98,28 @@
   }
 
   activateScene(0, false);
+
+  videos.forEach(function (video) {
+    if (!video) return;
+    video.defaultMuted = true;
+    video.addEventListener("playing", function () {
+      video.classList.add("is-playing");
+      if (isActiveVideo(video)) setVideoRetryVisible(false);
+    });
+    video.addEventListener("pause", function () {
+      video.classList.remove("is-playing");
+    });
+    video.addEventListener("error", function () {
+      if (isActiveVideo(video) && storyIsVisible && !reduceMotion) setVideoRetryVisible(true);
+    });
+  });
+
+  videoRetry.addEventListener("click", function () {
+    var video = videos[activeIndex];
+    if (!video) return;
+    video.preload = "auto";
+    setVideoState(video, true, false);
+  });
 
   if ("IntersectionObserver" in window) {
     var storyObserver = new IntersectionObserver(function (entries) {
@@ -138,8 +203,8 @@
         return false;
       });
     }
-    updateAudioUI(!audio.paused);
-    return Promise.resolve(!audio.paused);
+    updateAudioUI(!backgroundAudio.paused);
+    return Promise.resolve(!backgroundAudio.paused);
   }
 
   audioToggle.addEventListener("click", function () {
@@ -156,23 +221,15 @@
   });
 
   enterButton.addEventListener("click", function () {
-    // Unlock video playback on iOS: play then immediately pause each scene video
-    // under a real user gesture so that subsequent programmatic play() calls work.
-    // Wait for the unlock handshake before scrolling so iOS keeps the gesture
-    // context alive for every video (not just the first one).
-    var unlocks = videos.map(function (video) {
-      if (!video) return Promise.resolve();
-      video.muted = true;
-      video.playsInline = true;
-      var p = video.play();
-      if (!p || typeof p.then !== "function") return Promise.resolve();
-      return p.then(function () { video.pause(); }).catch(function () {});
-    });
-
+    // Start the visible scene in the user gesture, but never block navigation on
+    // downloading every remote video. Other scenes stay lazy-loaded and muted.
+    var video = videos[activeIndex];
+    if (video && !reduceMotion) {
+      video.preload = "auto";
+      setVideoState(video, true, false);
+    }
     playAudio();
-    Promise.all(unlocks).finally(function () {
-      scrolly.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-    });
+    scrolly.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
   });
 
   backgroundAudio.addEventListener("pause", function () {
